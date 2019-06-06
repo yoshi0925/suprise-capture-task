@@ -1,0 +1,445 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://psyc241.ucsd.edu/Chaipat/TB_PCL_vWM_2AFC/js/vismemCC.js"></script>
+<script src=""></script>
+
+<style>
+  .trialDiv {
+    /* border: 2px solid gray;*/
+    border: 0px;
+    padding: auto;
+    width: auto;
+    position: relative;
+    top: 50px;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+    text-align: center;
+    display: none;
+  }
+
+    body {
+      font-family: Arial, Helvetica;
+      font-size: 12pt;
+    }
+
+    #submitButton {
+      display: none;
+    }
+
+    #instructions {
+      width: 60%;
+      margin: 0 auto;
+      text-align: center;
+      margin-top: 100px;
+    }
+
+    #startExperiment {
+      color: rgb(200,200,200);
+      text-decoration: none;
+    }
+
+    #startExperiment:hover{
+      color: white;
+    }
+
+    #startExperimentButton {
+      width: 200px;
+      text-align: center;
+      border: 4px outset gray;
+      background: gray;
+      padding: 5px;
+      margin: 0 auto;
+    }
+
+    #meter{
+    width: 10cm;
+    height: 10cm;
+    }
+
+    .instr {
+      display: none;
+    }
+    #done {
+    display: none;
+    }
+</style>
+
+<div id="done" class="taskDiv">
+Saving data...
+</div>
+
+<input type="submit" value="Submit" name="submitButton" id="submitButton" style="display: none">
+
+<div id="instructions">
+<h2> Reaction Time Test </h2>
+    <p>[Task Description Here]<p>
+
+<p> <b> To proceed, please go fullscreen and your screen need to be bigger than 400 pixels </b>
+<br> Press <b>F11</b> to go full screen on a Windows PC
+</p>
+<p style="font:5px"> Clicking on the button will indicate that you have read this consent document and agree to participate. </p>
+
+<div id="startExperimentButton">
+<a href="#" id="startExperiment">Start Experiment</a>
+</div>
+<p></p>
+
+<div id="consent" style="height:120px; border:1px solid #ccc;font:12px Arial, Helvetica; overflow:auto" align="justify">
+<p align="center"><b>UNIVERSITY OF CALIFORNIA, SAN DIEGO
+<br>CONSENT TO ACT AS A RESEARCH SUBJECT</b>
+
+<p>
+<br> </p>
+
+<p>
+<br><b>PROCEDURES.</b> If you agree to participate in this study by accepting this HIT and continuing in the task, the following will happen to you:
+<br> &emsp; 1. You will be shown displays of letters, words, or pictures, right here in your web browser.
+<br> &emsp; 2. You will try to perceive and remember these stimuli, and respond by pressing keys or moving and clicking the mouse in a manner that we will describe to you.</p>
+
+<p>
+<br> <b>RISKS.</b> You will be required only to continue to interact with your web browser and make responses for a short duration. Thus, no potential risks or discomforts are anticipated except for the possibility that some tasks may be slightly boring. However, there may be risks that are currently unforeseeable.</p>
+
+<p>
+<br><b>PAYMENT/REMUNERATION.</b> In consideration of your time, you will receive payment at the rate described through the Amazon Mechanical Turk system. Compensation will range from $0.60 (for a 3 min task) up to as much as $8 (for a task that takes 45 min), with rates between $8/hr and $12/hr. The exact payment rate for this HIT is provided in the HIT description.</p>
+
+<p>
+<br><b>RIGHTS.</b> You may call the UCSD Human Research Protection Program at 858-657-5100 to ask about your rights as a research subject or to report research-related problems.</p>
+
+<p>
+<br><b>BENEFITS.</b>  There will be no direct benefit to you from these procedures.  However, the investigator may learn more about basic questions pertaining to attention, memory and vision.   This knowledge may have benefits to society in fields ranging from improving education to visual design, but these benefits will be indirect.</p>
+
+<p>
+<br><b>EXPLANATION.</b>  The researcher has explained this study to you and answered your questions.  If you have questions about the research or research-related problems, including any adverse events, you may reach Dr. Timothy Brady at timbrady@ucsd.edu or 858-822-4530.</p>
+
+<p>
+<br><b>VOLUNTARY NATURE OF PARTICIPATION.</b>  Participation in research is entirely voluntary.  You may refuse to participate or withdraw at any time without penalty. The alternative to participation is to choose not to participate.</p>
+
+<p>
+<br><b>CONFIDENTIALITY.</b>  Research records will be kept confidential to the extent allowed by law.  As with all research, there is also the possibility of loss of confidentiality.  Information from participants such as yourself will be identified by a subject number, which is not associated with your identity, by the researchers, to minimize the potential loss of confidentiality.</p>
+
+<p>
+<br>By clicking “I agree”, you are indicating that you are at least 18 years old, have read this consent form and agree to participate in this research study. Please print a copy of this page for your records.</p>
+</p>
+</div>
+</div>
+
+
+
+
+<div id='frame1'; class='trialDiv'>
+    <p>On each trial, you'll see five shapes and need to identify direction of the line inside the diamond-shaped target as possible.
+    <br> On each trial, there will be only one diamond shape. Press <b>"Z"</b> key if the line is horizontal, press <b>"M"</b> key if the line is vertical.
+    <br> You will given 2 seconds for each trial.
+    <br>Please keep your eyes at the dot in the middle.
+
+    <br> <br> Please press <b>space bar</b> to continue.</p>
+</div>
+
+<!-- Target Absent Trial Demo -->
+<div id='frame2'; class='trialDiv'>
+    <p>
+    <br>
+    <br> You may see something like this(pure green)
+    <br> Your goal is to report which way the line is facing inside of the diamond-shaped target.
+    <br> Please press <b>"Z"</b> if the line horizontal OR <b>"M"</b> if the line is vertical.
+    <br> You will given 2 seconds for each trial.
+    <br> <b>If the pictures are not complete, please maximaze the window.</b>
+
+    <br> <br> Please press <b>"Z"</b> to choose the horizontal direction OR <b>"M"</b> to choose the vertical direction as your response.</p>
+</div>
+
+<div id='pic'; style="float: left; clear: both; maring: 50px 0px 0px 0px;">
+</div>
+
+<!-- Target Present Trial Demo -->
+<div id='frame3'; class='trialDiv'>
+    <p>
+    <br> You may also see something like this(pure red)
+    <br> Your goal is <b>the same</b> as previous: report which way the line is facing inside of the diamond-shaped target.
+    <br> Please press <b>"Z"</b> if the line horizontal OR <b>"M"</b> if the line is vertical.
+
+    <br> <br> Please press <b>"Z"</b> to choose the horizontal direction OR <b>"M"</b> to choose the vertical direction as your response.</p>
+</div>
+
+<!-- Target Present Trial Demo -->
+<div id='frame4'; class='trialDiv'>
+    <p>
+    <br> You may also see something like this(one red: red in green)
+    <br> Your goal is <b>the same</b> as previous: report which way the line is facing inside of the diamond-shaped target.
+    <br> Please press <b>"Z"</b> if the line horizontal OR <b>"M"</b> if the line is vertical.
+
+    <br> <br> Please press <b>"Z"</b> to choose the horizontal direction OR <b>"M"</b> to choose the vertical direction as your response.</p>
+</div>
+
+<!-- Target Present Trial Demo -->
+<div id='frame5'; class='trialDiv'>
+    <p>
+    <br> You may also see something like this(one green: green in red)
+    <br> Your goal is <b>the same</b> as previous: report which way the line is facing inside of the diamond-shaped target.
+    <br> Please press <b>"Z"</b> if the line horizontal OR <b>"M"</b> if the line is vertical.
+
+    <br> <br> Please press <b>"Z"</b> to choose the horizontal direction OR <b>"M"</b> to choose the vertical direction as your response.</p>
+</div>
+
+<div id='frame6'; class='trialDiv'>
+    <p>
+    <br> The next trail will start after you make a response.
+    <br> The sequence will always be like this.
+    <br> Are you ready?
+    <br> <br> Please press <b>any keys</b> to continue.</p>
+</div>
+
+<!-- Start page of every group of trials -->
+<div id='frame7'; class='trialDiv'>
+    <p>
+    <br> You can proceed to next round of trials when you are ready.
+    <br> <br> Please press <b>any keys</b> to continue.</p>
+</div>
+
+<!-- Trial Page -->
+<div id='hor_ver'; class='trialDiv'>
+  <p>
+  <br> Press 'z' for horizontal, 'm' for vertical.</p>
+</div>
+
+
+<!--Beginning of javascript code-->
+  <script>
+    $('#startExperiment').click(tutorial_1);
+
+    var Lkey = 122;
+    var Rkey = 109;
+    var green_circle_hor = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/green_circle_hor.png";
+    var green_circle_ver = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/green_circle_ver.png";
+    var green_rec_hor = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/green_rec_hor.png";
+    var green_rec_ver = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/green_rec_ver.png";
+    var red_circle_hor = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/red_circle_hor.png";
+    var red_circle_ver = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/red_circle_ver.png";
+    var red_rec_hor = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/red_rec_hor.png";
+    var red_rec_ver = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/red_rec_ver.png";
+
+    var arr_g = [green_rec_hor,green_rec_ver];
+    var arr_r = [red_rec_hor,red_rec_ver];
+
+    var arr_loc = ['top','mid_left','mid_right','bot_left','bot_right'];
+
+    var arr_g_remaining = [green_circle_ver, green_circle_hor];
+    var arr_r_remaining = [red_circle_ver, red_circle_hor];
+
+
+    function show_image(src, width, height, direction) {
+        var img = document.createElement("img");
+        img.src = src;
+        if(direction == "top"){
+          img.style = "position: absolute; top: 150px; left: 600px;"
+        }
+        else if(direction == "mid_right"){
+          img.style = "position: absolute; top: 300px; left: 300px;"
+        }
+        else if(direction == "mid_left"){
+          img.style = "position: absolute; top: 300px; left: 900px;"
+        }
+        else if(direction == "bot_left" ){
+          img.style = "position: absolute; top: 550px; left: 450px;"
+        }
+        else if(direction == "bot_right"){
+          img.style = "position: absolute; top: 550px; left: 750px;"
+        }
+        else{
+          var e = new Error('image location error, please check render codes');
+          throw e
+        }
+
+        img.width = width;
+        img.height = height;
+
+        // This next line will just add it to the <div id='pic'> tag
+        var pic_div = document.getElementById('pic');
+        pic_div.appendChild(img);
+
+    }
+
+
+    function tutorial_1(){
+        if ($(window).width() >= 600 && screen.width*.8 < $(window).width()){
+            $('#instructions').hide();
+            $('#frame1').show();
+          // Begin
+          $(document).on("keypress.trialWait", PressedKey1);
+
+          function PressedKey1(evt) {
+              evt.preventDefault();
+              if (evt.which == 32) {
+                  tutorial_2();
+              }
+          }
+        }
+    }
+
+    function rand_red(){
+      var div = document.getElementById('pic');
+      while(div.firstChild){
+          div.removeChild(div.firstChild);
+      }
+      var tar_pic = arr_r[Math.floor(Math.random() * 2)];
+      var tar_loc = arr_loc[Math.floor(Math.random() * 5)];
+
+      show_image(tar_pic, 250, 250, tar_loc);
+      var arr_loc_remaining = arr_loc.filter(function(value, index, arr){return value != tar_loc;});
+
+      var i;
+      for(i = 0;i<arr_loc_remaining.length; i++){
+        show_image(arr_r_remaining[Math.floor(Math.random() * 2)], 250, 250, arr_loc_remaining[i]);
+      }
+    }
+
+    function rand_green(){
+      var div = document.getElementById('pic');
+      while(div.firstChild){
+          div.removeChild(div.firstChild);
+      }
+      var tar_pic = arr_g[Math.floor(Math.random() * 2)];
+      var tar_loc = arr_loc[Math.floor(Math.random() * 5)];
+
+      show_image(tar_pic, 250, 250, tar_loc);
+      var arr_loc_remaining = arr_loc.filter(function(value, index, arr){return value != tar_loc;});
+
+      var i;
+      for(i = 0;i<arr_loc_remaining.length; i++){
+        show_image(arr_g_remaining[Math.floor(Math.random() * 2)], 250, 250, arr_loc_remaining[i]);
+      }
+    }
+
+    function rand_red_in_green(){
+      var div = document.getElementById('pic');
+      while(div.firstChild){
+          div.removeChild(div.firstChild);
+      }
+      var tar_pic = arr_g[Math.floor(Math.random() * 2)];
+      var tar_loc = arr_loc[Math.floor(Math.random() * 5)];
+
+      show_image(tar_pic, 250, 250, tar_loc);
+      var arr_loc_remaining = arr_loc.filter(function(value, index, arr){return value != tar_loc;});
+
+      var fake_pic = arr_r_remaining[Math.floor(Math.random() * 2)];
+      var tar_loc2 = arr_loc_remaining[Math.floor(Math.random() * 4)];
+
+      show_image(fake_pic, 250,250, tar_loc2);
+      var arr_loc_remaining2 = arr_loc_remaining.filter(function(value, index, arr){return value != tar_loc2;});
+
+      var i;
+      for(i = 0;i<arr_loc_remaining2.length; i++){
+        show_image(arr_g_remaining[Math.floor(Math.random() * 2)], 250, 250, arr_loc_remaining2[i]);
+      }
+    }
+
+    function rand_green_in_red(){
+      var div = document.getElementById('pic');
+      while(div.firstChild){
+          div.removeChild(div.firstChild);
+      }
+      var tar_pic = arr_r[Math.floor(Math.random() * 2)];
+      var tar_loc = arr_loc[Math.floor(Math.random() * 5)];
+
+      show_image(tar_pic, 250, 250, tar_loc);
+      var arr_loc_remaining = arr_loc.filter(function(value, index, arr){return value != tar_loc;});
+
+      var fake_pic = arr_g_remaining[Math.floor(Math.random() * 2)];
+      var tar_loc2 = arr_loc_remaining[Math.floor(Math.random() * 4)];
+      show_image(fake_pic, 250,250, tar_loc2);
+
+      var arr_loc_remaining2 = arr_loc_remaining.filter(function(value, index, arr){return value != tar_loc2;});
+
+      var i;
+      for(i = 0;i<arr_loc_remaining2.length; i++){
+        show_image(arr_r_remaining[Math.floor(Math.random() * 2)], 250, 250, arr_loc_remaining2[i]);
+      }
+    }
+
+    //pure green
+    function tutorial_2(){
+        $('#frame1').hide();
+        $('#frame2').show();
+
+        rand_green();
+
+        $(document).on("keypress.trialWait", PressedKey2);
+        function PressedKey2(evt) {
+            evt.preventDefault();
+            if (evt.which == Lkey | evt.which == Rkey ) {
+                tutorial_3();
+            }
+        }
+    }
+
+    //pure red
+    function tutorial_3(){
+        $('#frame2').hide();
+        $('#frame3').show();
+
+        rand_red();
+
+        $(document).on("keypress.trialWait", PressedKey3);
+        function PressedKey3(evt) {
+            evt.preventDefault();
+            if (evt.which == Lkey | evt.which == Rkey ) {
+                tutorial_4();
+            }
+        }
+    }
+
+    //one red
+    function tutorial_4(){
+        $('#frame2').hide();
+        $('#frame3').show();
+
+        rand_red_in_green();
+
+        $(document).on("keypress.trialWait", PressedKey4);
+        function PressedKey4(evt) {
+            evt.preventDefault();
+            if (evt.which == Lkey | evt.which == Rkey ) {
+                tutorial_5();
+            }
+        }
+    }
+
+    //one green
+    function tutorial_5(){
+        $('#frame2').hide();
+        $('#frame3').show();
+
+        rand_green_in_red();
+
+        $(document).on("keypress.trialWait", PressedKey5);
+        function PressedKey5(evt) {
+            evt.preventDefault();
+            if (evt.which == Lkey | evt.which == Rkey ) {
+                tutorial_6();
+            }
+        }
+    }
+
+    function tutorial_6(){
+        $('#frame2').hide();
+        $('#frame3').show();
+
+        if(Math.floor(Math.random() * 2)==0){
+          rand_green();
+        }
+        else{
+          rand_red();
+        }
+
+        $(document).on("keypress.trialWait", PressedKey3);
+        function PressedKey3(evt) {
+            evt.preventDefault();
+            if (evt.which == Lkey | evt.which == Rkey ) {
+                tutorial_3();
+            }
+        }
+    }
+
+
+
+  </script>
