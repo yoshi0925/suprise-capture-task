@@ -252,12 +252,42 @@
   var arr_r_remaining = [red_circle_ver, red_circle_hor];
 
   // same color mode run 5 times
-  var ctr_same_color = 5
-  var trial_num = 1
+  var ctr_same_color = 5;
+  var trial_num = 1;
 
-  var res_list = []
-  var display_list = []
-  var res = 0
+  //display_list to save the generated answere, res_list is the human answer
+  var res_list = [];
+  var display_list = [];
+  var res = 0;
+
+  // flags for random cases organization
+  var g_flag = false;
+  var r_flag = false;
+  var mix_flag = false;
+
+  // preload the images
+  var imgSrcArr = [
+        green_circle_hor,
+        green_circle_ver,
+        green_rec_hor,
+        green_rec_ver,
+        red_circle_hor,
+        red_circle_ver,
+        red_rec_hor,
+        red_rec_ver,
+        dot
+    ];
+
+    var imgWrap = [];
+
+    function preloadImg(arr) {
+        for(var i =0; i< arr.length ;i++) {
+            imgWrap[i] = new Image();
+            imgWrap[i].src = arr[i];
+        }
+    }
+
+    preloadImg(imgSrcArr);
 
   //ms: millie seconds you want to sleep
   //usage: await sleep(200) in an async function
@@ -405,7 +435,7 @@
   }
 
   function tutorial_1() {
-    if ($(window).width() >= 600 && screen.width * .8 < $(window).width()) {
+    if ($(window).width() >= 600 & screen.width * .8 < $(window).width()) {
       $('#instructions').hide();
       $('#frame1').show();
       // Begin
@@ -414,7 +444,19 @@
       function PressedKey1(evt) {
         evt.preventDefault();
         if (evt.which == 32) {
-          tutorial_2();
+          var redirect = Math.floor(Math.random() * 100);
+          if(redirect >= 0 & redirect <= 24){//pure green 25%
+            g_flag = true;
+            tutorial_2();
+          }
+          else if(redirect >= 25 & redirect <= 49){//pure red 25%
+            r_flag = true;
+            tutorial_3();
+          }
+          else{//red_in_green + green_in_red 50%
+            mix_flag = true;
+            tutorial_4();
+          }
         }
       }
     }
@@ -432,32 +474,7 @@
     function PressedKey2(evt) {
       evt.preventDefault();
       if (evt.which == Lkey | evt.which == Rkey) {
-        if(index < 3){//这个index可以改，现在的3意味着pure green执行三次，之后的redingreen一次，总共四次
-          res = evt.which == Rkey ? 1 : 0;
-          res_list.push(res);
-
-          tutorial_2();
-          index += 1;
-        }
-        else{//这里为了防止重复call，从tutorial_5复制过来了一段，记得改frame hide/show和pressedKey
-          $(document).off("keypress.trialWait");
-          $('#frame1').hide();
-          $('#frame2').show();
-          rand_red_in_green();
-
-          $(document).on("keypress.trialWait", PressedKey2_1);
-
-          function PressedKey2_1(evt) {
-            evt.preventDefault();
-            if (evt.which == Lkey | evt.which == Rkey) {
-              res = evt.which == Rkey ? 1 : 0;
-              res_list.push(res);
-              //index改成0 方便之后用
-              index = 0;
-              tutorial_3();
-            }
-          }
-        }
+        tutorial_6();
       }
     }
   }
@@ -465,42 +482,16 @@
   //pure red
   function tutorial_3() {
     $(document).off("keypress.trialWait");
-    $('#frame2').hide();
+    $('#frame1').hide();
     $('#frame3').show();
     rand_red();
-
 
     $(document).on("keypress.trialWait", PressedKey3);
 
     function PressedKey3(evt) {
       evt.preventDefault();
       if (evt.which == Lkey | evt.which == Rkey) {
-        if(index < 3){//这个index可以改，现在的3意味着pure green执行三次，之后的redingreen一次，总共四次
-          res = evt.which == Rkey ? 1 : 0;
-          res_list.push(res);
-
-          tutorial_3();
-          index += 1;
-        }
-        else{//这里为了防止重复call，从tutorial_5复制过来了一段，记得改frame hide/show和pressedKey
-          $(document).off("keypress.trialWait");
-          $('#frame2').hide();
-          $('#frame3').show();
-          rand_green_in_red();
-
-          $(document).on("keypress.trialWait", PressedKey3_1);
-
-          function PressedKey3_1(evt) {
-            evt.preventDefault();
-            if (evt.which == Lkey | evt.which == Rkey) {
-              res = evt.which == Rkey ? 1 : 0;
-              res_list.push(res);
-              //index改成0 方便之后用
-              index = 0;
-              tutorial_4();
-            }
-          }
-        }
+        tutorial_6();
       }
     }
   }
@@ -508,7 +499,7 @@
   //one red
   function tutorial_4() {
     $(document).off("keypress.trialWait");
-    $('#frame3').hide();
+    $('#frame1').hide();
     $('#frame4').show();
     rand_red_in_green();
 
@@ -542,7 +533,15 @@
 
   function tutorial_6() {
     $(document).off("keypress.trialWait");
-    $('#frame5').hide();
+    if(g_flag){
+      $('#frame2').hide();
+    }
+    if(r_flag){
+      $('#frame3').hide();
+    }
+    if(mix_flag){
+      $('#frame5').hide();
+    }
     clean_image();
     $('#frame6').show();
 
@@ -551,12 +550,118 @@
     function PressedKey6(evt) {
       evt.preventDefault();
       if (evt.which == 32) {
-        trial();
+        if(g_flag){
+          trial_pure_green();
+        }
+        else if(r_flag){
+          trial_pure_red();
+        }
+        else{
+          trial_red_or_green();
+        }
       }
     }
   }
 
-  function trial() {
+  function trial_pure_green() {
+    $(document).off("keypress.trialWait");
+    $('#frame6').hide();
+    $('#hor_ver').show();
+
+    rand_green();
+
+    document.getElementById('trialNumber').innerHTML = trial_num++;
+    $('#progressReport').show();
+
+    $(document).on("keypress.trialWait", PressedKey2);
+
+    function PressedKey2(evt) {
+      evt.preventDefault();
+      if (evt.which == Lkey | evt.which == Rkey) {
+        if(index < 3){//这个index可以改，现在的3意味着pure green执行4次，之后的redingreen一次，总共5次
+          res = evt.which == Rkey ? 1 : 0;
+          res_list.push(res);
+
+          trial_pure_green();
+          index += 1;
+        }
+        else{//这里为了防止重复call，从tutorial_5复制过来了一段，记得改frame hide/show和pressedKey
+          $(document).off("keypress.trialWait");
+          $('#frame6').hide();
+          $('#hor_ver').show();
+
+          document.getElementById('trialNumber').innerHTML = trial_num++;
+          $('#progressReport').show();
+
+          rand_red_in_green();
+
+          $(document).on("keypress.trialWait", PressedKey2_1);
+
+          function PressedKey2_1(evt) {
+            evt.preventDefault();
+            if (evt.which == Lkey | evt.which == Rkey) {
+              res = evt.which == Rkey ? 1 : 0;
+              res_list.push(res);
+              //index改成0 方便之后用
+              index = 0;
+              AfterSuccessDataSaving();
+            }
+          }
+        }
+      }
+    }
+  }
+
+  function trial_pure_red() {
+    $(document).off("keypress.trialWait");
+    $('#frame6').hide();
+    $('#hor_ver').show();
+
+    rand_red();
+
+    document.getElementById('trialNumber').innerHTML = trial_num++;
+    $('#progressReport').show();
+
+    $(document).on("keypress.trialWait", PressedKey3);
+
+    function PressedKey3(evt) {
+      evt.preventDefault();
+      if (evt.which == Lkey | evt.which == Rkey) {
+        if(index < 3){
+          res = evt.which == Rkey ? 1 : 0;
+          res_list.push(res);
+
+          trial_pure_red();
+          index += 1;
+        }
+        else{
+          $(document).off("keypress.trialWait");
+          $('#frame6').hide();
+          $('#hor_ver').show();
+
+          rand_green_in_red();
+
+          document.getElementById('trialNumber').innerHTML = trial_num++;
+          $('#progressReport').show();
+
+          $(document).on("keypress.trialWait", PressedKey3_1);
+
+          function PressedKey3_1(evt) {
+            evt.preventDefault();
+            if (evt.which == Lkey | evt.which == Rkey) {
+              res = evt.which == Rkey ? 1 : 0;
+              res_list.push(res);
+              //index改成0 方便之后用
+              index = 0;
+              AfterSuccessDataSaving();
+            }
+          }
+        }
+      }
+    }
+  }
+
+  function trial_red_or_green() {
     $(document).off("keypress.trialWait");
     $('#frame1').hide();
     $('#frame2').hide();
@@ -567,9 +672,9 @@
     $('#hor_ver').show();
 
     if (Math.floor(Math.random() * 2) == 0) {
-      rand_green();
+      rand_green_in_red();
     } else {
-      rand_red();
+      rand_red_in_green();
     }
     document.getElementById('trialNumber').innerHTML = trial_num++;
     $('#progressReport').show();
@@ -577,11 +682,11 @@
 
     function PressedKey7(evt) {
       evt.preventDefault();
-      if (ctr_same_color > 1 && evt.which == Lkey | evt.which == Rkey) {
+      if (ctr_same_color > 1 & evt.which == Lkey | evt.which == Rkey) {
         res = evt.which == Rkey ? 1 : 0;
         ctr_same_color -= 1;
         res_list.push(res);
-        trial();
+        trial_red_or_green();
       } else if (ctr_same_color == 1) {
         AfterSuccessDataSaving();
       }
