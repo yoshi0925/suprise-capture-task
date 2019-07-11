@@ -60,20 +60,30 @@
     display: none;
   }
 
+  .center-div {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 320px;
+    height: 100px;
+  }
+
   #done {
     display: none;
   }
 </style>
 
-<div id="done" class="taskDiv">
+<div id="done" class="center-div">
   Saving data...
 </div>
 
-<input type="submit" value="Submit" name="submitButton" id="submitButton" style="display: none">
+<input type="submit" value="Submit" name="submitButton" id="submitButton" style="position: absolute; margin: auto; top: 0; right: 0; bottom: 0; left: 0; width: 50px; height: 100px;">
 
 <div id="instructions">
   <h2> Reaction Time Test </h2>
-  <p>[Task Description Here]
     <p>
 
       <p> <b> To proceed, please go fullscreen and your screen need to be bigger than 400 pixels </b>
@@ -82,7 +92,7 @@
       <p style="font:5px"> Clicking on the button will indicate that you have read this consent document and agree to participate. </p>
 
       <div id="startExperimentButton">
-        <a href="#" id="startExperiment">Start Experiment</a>
+        <a href="#" id="startExperiment">I agree</a>
       </div>
       <p></p>
 
@@ -129,9 +139,6 @@
         </p>
       </div>
 </div>
-
-
-
 
 <div id='frame1' ; class='trialDiv'>
   <p>On each trial, you'll see five shapes and need to identify direction of the line inside the diamond-shaped target as possible.
@@ -209,6 +216,10 @@
     <br> Press 'z' for horizontal, 'm' for vertical.</p>
 </div>
 
+<div id="progressReport" ; class='trialDiv'>
+  Trial <span id="trialNumber">1</span> of <span id="totalTrialNumber">5</span>; <!-- THIS NUMBER WILL NEED TO BE CHANGED IF THE NUMBER OF TRIALS CHANGES -->
+</div>
+
 
 <!--Beginning of javascript code-->
 <script>
@@ -230,6 +241,7 @@
   var red_circle_ver = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/red_circle_ver.png";
   var red_rec_hor = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/red_rec_hor.png";
   var red_rec_ver = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/red_rec_ver.png";
+  var dot = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/900px-Maya_1.svg.png";
 
   var arr_g = [green_rec_hor, green_rec_ver];
   var arr_r = [red_rec_hor, red_rec_ver];
@@ -239,18 +251,33 @@
   var arr_g_remaining = [green_circle_ver, green_circle_hor];
   var arr_r_remaining = [red_circle_ver, red_circle_hor];
 
+  // same color mode run 5 times
+  var ctr_same_color = 5
+  var trial_num = 1
+
+  var res_list = []
+  var display_list = []
+  var res = 0
+
+  //ms: millie seconds you want to sleep
+  //usage: await sleep(200) in an async function
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 
   function show_image(src, width, height, direction) {
     var img = document.createElement("img");
     img.src = src;
     if (direction == "top") {
-      img.style = "position: absolute; top: 150px; left: 600px;"
+      img.style = "position: absolute; top: 100px; left: 600px;"
     } else if (direction == "mid_right") {
       img.style = "position: absolute; top: 300px; left: 300px;"
     } else if (direction == "mid_left") {
       img.style = "position: absolute; top: 300px; left: 900px;"
     } else if (direction == "bot_left") {
       img.style = "position: absolute; top: 550px; left: 450px;"
+    } else if (direction == 'center') {
+      img.style = "position: absolute; top: 350; left: 600;"
     } else if (direction == "bot_right") {
       img.style = "position: absolute; top: 550px; left: 750px;"
     } else {
@@ -267,13 +294,22 @@
 
   }
 
-  function rand_red() {
+  function clean_image() {
     var div = document.getElementById('pic');
     while (div.firstChild) {
       div.removeChild(div.firstChild);
     }
+  }
+
+  async function rand_red() {
+    clean_image();
+    await sleep(200);
+    show_image(dot, 250, 250, 'center');
     var tar_pic = arr_r[Math.floor(Math.random() * 2)];
     var tar_loc = arr_loc[Math.floor(Math.random() * 5)];
+//TODO save tar_pic into an array to store randomized results, also in other rand_color functions
+    res = tar_pic.includes('ver') ? 1 : 0;
+    display_list.push(res);
 
     show_image(tar_pic, 250, 250, tar_loc);
     var arr_loc_remaining = arr_loc.filter(function(value, index, arr) {
@@ -286,13 +322,16 @@
     }
   }
 
-  function rand_green() {
-    var div = document.getElementById('pic');
-    while (div.firstChild) {
-      div.removeChild(div.firstChild);
-    }
+  async function rand_green() {
+    clean_image();
+    await sleep(200);
+    show_image(dot, 250, 250, 'center');
+
     var tar_pic = arr_g[Math.floor(Math.random() * 2)];
     var tar_loc = arr_loc[Math.floor(Math.random() * 5)];
+
+    res = tar_pic.includes('ver') ? 1 : 0;
+    display_list.push(res);
 
     show_image(tar_pic, 250, 250, tar_loc);
     var arr_loc_remaining = arr_loc.filter(function(value, index, arr) {
@@ -305,13 +344,16 @@
     }
   }
 
-  function rand_red_in_green() {
-    var div = document.getElementById('pic');
-    while (div.firstChild) {
-      div.removeChild(div.firstChild);
-    }
+  async function rand_red_in_green() {
+    clean_image();
+    await sleep(200);
+    show_image(dot, 250, 250, 'center');
+
     var tar_pic = arr_g[Math.floor(Math.random() * 2)];
     var tar_loc = arr_loc[Math.floor(Math.random() * 5)];
+
+    res = tar_pic.includes('ver') ? 1 : 0;
+    display_list.push(res);
 
     show_image(tar_pic, 250, 250, tar_loc);
     var arr_loc_remaining = arr_loc.filter(function(value, index, arr) {
@@ -332,13 +374,16 @@
     }
   }
 
-  function rand_green_in_red() {
-    var div = document.getElementById('pic');
-    while (div.firstChild) {
-      div.removeChild(div.firstChild);
-    }
+  async function rand_green_in_red() {
+    clean_image();
+    await sleep(200);
+    show_image(dot, 250, 250, 'center');
+
     var tar_pic = arr_r[Math.floor(Math.random() * 2)];
     var tar_loc = arr_loc[Math.floor(Math.random() * 5)];
+
+    res = tar_pic.includes('ver') ? 1 : 0;
+    display_list.push(res);
 
     show_image(tar_pic, 250, 250, tar_loc);
     var arr_loc_remaining = arr_loc.filter(function(value, index, arr) {
@@ -374,9 +419,10 @@
       }
     }
   }
-
+  var index = 0;
   //pure green
   function tutorial_2() {
+    $(document).off("keypress.trialWait");
     $('#frame1').hide();
     $('#frame2').show();
     rand_green();
@@ -385,14 +431,40 @@
 
     function PressedKey2(evt) {
       evt.preventDefault();
-      if (evt.which == Lkey | evt.which == Rkey | isTrain) {
-        tutorial_3();
+      if (evt.which == Lkey | evt.which == Rkey) {
+        if(index < 3){//这个index可以改，现在的3意味着pure green执行三次，之后的redingreen一次，总共四次
+          res = evt.which == Rkey ? 1 : 0;
+          res_list.push(res);
+
+          tutorial_2();
+          index += 1;
+        }
+        else{//这里为了防止重复call，从tutorial_5复制过来了一段，记得改frame hide/show和pressedKey
+          $(document).off("keypress.trialWait");
+          $('#frame1').hide();
+          $('#frame2').show();
+          rand_red_in_green();
+
+          $(document).on("keypress.trialWait", PressedKey2_1);
+
+          function PressedKey2_1(evt) {
+            evt.preventDefault();
+            if (evt.which == Lkey | evt.which == Rkey) {
+              res = evt.which == Rkey ? 1 : 0;
+              res_list.push(res);
+              //index改成0 方便之后用
+              index = 0;
+              tutorial_3();
+            }
+          }
+        }
       }
     }
   }
 
   //pure red
   function tutorial_3() {
+    $(document).off("keypress.trialWait");
     $('#frame2').hide();
     $('#frame3').show();
     rand_red();
@@ -403,13 +475,39 @@
     function PressedKey3(evt) {
       evt.preventDefault();
       if (evt.which == Lkey | evt.which == Rkey) {
-        tutorial_4();
+        if(index < 3){//这个index可以改，现在的3意味着pure green执行三次，之后的redingreen一次，总共四次
+          res = evt.which == Rkey ? 1 : 0;
+          res_list.push(res);
+
+          tutorial_3();
+          index += 1;
+        }
+        else{//这里为了防止重复call，从tutorial_5复制过来了一段，记得改frame hide/show和pressedKey
+          $(document).off("keypress.trialWait");
+          $('#frame2').hide();
+          $('#frame3').show();
+          rand_green_in_red();
+
+          $(document).on("keypress.trialWait", PressedKey3_1);
+
+          function PressedKey3_1(evt) {
+            evt.preventDefault();
+            if (evt.which == Lkey | evt.which == Rkey) {
+              res = evt.which == Rkey ? 1 : 0;
+              res_list.push(res);
+              //index改成0 方便之后用
+              index = 0;
+              tutorial_4();
+            }
+          }
+        }
       }
     }
   }
 
   //one red
   function tutorial_4() {
+    $(document).off("keypress.trialWait");
     $('#frame3').hide();
     $('#frame4').show();
     rand_red_in_green();
@@ -427,6 +525,7 @@
 
   //one green
   function tutorial_5() {
+    $(document).off("keypress.trialWait");
     $('#frame4').hide();
     $('#frame5').show();
     rand_green_in_red();
@@ -442,7 +541,9 @@
   }
 
   function tutorial_6() {
+    $(document).off("keypress.trialWait");
     $('#frame5').hide();
+    clean_image();
     $('#frame6').show();
 
     $(document).on("keypress.trialWait", PressedKey6);
@@ -455,7 +556,13 @@
     }
   }
 
-  function trial(){
+  function trial() {
+    $(document).off("keypress.trialWait");
+    $('#frame1').hide();
+    $('#frame2').hide();
+    $('#frame3').hide();
+    $('#frame4').hide();
+    $('#frame5').hide();
     $('#frame6').hide();
     $('#hor_ver').show();
 
@@ -464,5 +571,44 @@
     } else {
       rand_red();
     }
+    document.getElementById('trialNumber').innerHTML = trial_num++;
+    $('#progressReport').show();
+    $(document).on("keypress.trialWait", PressedKey7);
+
+    function PressedKey7(evt) {
+      evt.preventDefault();
+      if (ctr_same_color > 1 && evt.which == Lkey | evt.which == Rkey) {
+        res = evt.which == Rkey ? 1 : 0;
+        ctr_same_color -= 1;
+        res_list.push(res);
+        trial();
+      } else if (ctr_same_color == 1) {
+        AfterSuccessDataSaving();
+      }
+    }
+  }
+
+
+
+  function AfterSuccessDataSaving() {
+    clean_image();
+    $('#hor_ver').hide();
+    $('#progressReport').hide();
+    // After they are done, send them here:
+    // window.location = "https://ucsd.sona-systems.com/webstudy_credit.aspx?experiment_id=1267&credit_token=805f6634de5a46b3aecffe2818d8d90c&survey_code=" + getParameterByName("code");
+    $('#submitButton').show();
+    $('#done').html("All done, thanks! Please click submit button.");
+    $('#done').show();
+    $('#')
+    console.log("Saved!");
+  }
+
+  function AfterFailedSaving() {
+    console.log("oops, failed to save");
+
+    // window.location = "https://ucsd.sona-systems.com/webstudy_credit.aspx?experiment_id=1267&credit_token=805f6634de5a46b3aecffe2818d8d90c&survey_code=" + getParameterByName("code");
+    $('#submitButton').show();
+    $('#done').html("All done, thanks! Please click submit button.");
+
   }
 </script>
