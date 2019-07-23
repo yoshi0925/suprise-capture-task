@@ -348,8 +348,8 @@
 
   async function rand_red() {
     clean_image();
-    await sleep(100);
     show_image(dot, 250, 250, 'center');
+    await sleep(100);
     var tar_pic = arr_r[Math.floor(Math.random() * 2)];
     var tar_loc = arr_loc[Math.floor(Math.random() * 5)];
     //TODO save tar_pic into an array to store randomized results, also in other rand_color functions
@@ -369,8 +369,8 @@
 
   async function rand_green() {
     clean_image();
-    await sleep(100);
     show_image(dot, 250, 250, 'center');
+    await sleep(100);
 
     var tar_pic = arr_g[Math.floor(Math.random() * 2)];
     var tar_loc = arr_loc[Math.floor(Math.random() * 5)];
@@ -391,8 +391,8 @@
 
   async function rand_red_in_green() {
     clean_image();
-    await sleep(100);
     show_image(dot, 250, 250, 'center');
+    await sleep(100);
 
     var tar_pic = arr_g[Math.floor(Math.random() * 2)];
     var tar_loc = arr_loc[Math.floor(Math.random() * 5)];
@@ -421,8 +421,8 @@
 
   async function rand_green_in_red() {
     clean_image();
-    await sleep(100);
     show_image(dot, 250, 250, 'center');
+    await sleep(100);
 
     var tar_pic = arr_r[Math.floor(Math.random() * 2)];
     var tar_loc = arr_loc[Math.floor(Math.random() * 5)];
