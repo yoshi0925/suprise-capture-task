@@ -295,6 +295,8 @@
 
   var imgWrap = [];
 
+  var controller = false;
+
   function preloadImg(arr) {
     for (var i = 0; i < arr.length; i++) {
       imgWrap[i] = new Image();
@@ -348,8 +350,9 @@
 
   async function rand_red() {
     clean_image();
+    controller = false;
     show_image(dot, 250, 250, 'center');
-    await sleep(100);
+    await sleep(1000);
     var tar_pic = arr_r[Math.floor(Math.random() * 2)];
     var tar_loc = arr_loc[Math.floor(Math.random() * 5)];
     //TODO save tar_pic into an array to store randomized results, also in other rand_color functions
@@ -365,12 +368,14 @@
     for (i = 0; i < arr_loc_remaining.length; i++) {
       show_image(arr_r_remaining[Math.floor(Math.random() * 2)], 250, 250, arr_loc_remaining[i]);
     }
+    controller = true;
   }
 
   async function rand_green() {
     clean_image();
+    controller = false;
     show_image(dot, 250, 250, 'center');
-    await sleep(100);
+    await sleep(1000);
 
     var tar_pic = arr_g[Math.floor(Math.random() * 2)];
     var tar_loc = arr_loc[Math.floor(Math.random() * 5)];
@@ -387,12 +392,14 @@
     for (i = 0; i < arr_loc_remaining.length; i++) {
       show_image(arr_g_remaining[Math.floor(Math.random() * 2)], 250, 250, arr_loc_remaining[i]);
     }
+    controller = true;
   }
 
   async function rand_red_in_green() {
     clean_image();
+    controller = false;
     show_image(dot, 250, 250, 'center');
-    await sleep(100);
+    await sleep(1000);
 
     var tar_pic = arr_g[Math.floor(Math.random() * 2)];
     var tar_loc = arr_loc[Math.floor(Math.random() * 5)];
@@ -417,12 +424,14 @@
     for (i = 0; i < arr_loc_remaining2.length; i++) {
       show_image(arr_g_remaining[Math.floor(Math.random() * 2)], 250, 250, arr_loc_remaining2[i]);
     }
+    controller = true;
   }
 
   async function rand_green_in_red() {
     clean_image();
+    controller = false;
     show_image(dot, 250, 250, 'center');
-    await sleep(100);
+    await sleep(1000);
 
     var tar_pic = arr_r[Math.floor(Math.random() * 2)];
     var tar_loc = arr_loc[Math.floor(Math.random() * 5)];
@@ -447,6 +456,7 @@
     for (i = 0; i < arr_loc_remaining2.length; i++) {
       show_image(arr_r_remaining[Math.floor(Math.random() * 2)], 250, 250, arr_loc_remaining2[i]);
     }
+    controller = true;
   }
 
   function tutorial_1() {
@@ -486,7 +496,7 @@
 
     function PressedKey2(evt) {
       evt.preventDefault();
-      if (evt.which == Lkey | evt.which == Rkey) {
+      if (controller & (evt.which == Lkey | evt.which == Rkey)) {
         tutorial_6();
       }
     }
@@ -503,7 +513,7 @@
 
     function PressedKey3(evt) {
       evt.preventDefault();
-      if (evt.which == Lkey | evt.which == Rkey) {
+      if (controller & (evt.which == Lkey | evt.which == Rkey)) {
         tutorial_6();
       }
     }
@@ -513,14 +523,14 @@
   function tutorial_4() {
     $(document).off("keypress.trialWait");
     $('#frame1').hide();
-    $('#frame4').show();
-    rand_red_in_green();
+    $('#frame3').show();
+    rand_red();
 
     $(document).on("keypress.trialWait", PressedKey4);
 
     function PressedKey4(evt) {
       evt.preventDefault();
-      if (evt.which == Lkey | evt.which == Rkey) {
+      if (controller & (evt.which == Lkey | evt.which == Rkey)) {
         tutorial_5();
       }
     }
@@ -530,15 +540,15 @@
   //one green
   function tutorial_5() {
     $(document).off("keypress.trialWait");
-    $('#frame4').hide();
-    $('#frame5').show();
-    rand_green_in_red();
+    $('#frame3').hide();
+    $('#frame2').show();
+    rand_green();
 
     $(document).on("keypress.trialWait", PressedKey5);
 
     function PressedKey5(evt) {
       evt.preventDefault();
-      if (evt.which == Lkey | evt.which == Rkey) {
+      if (controller & (evt.which == Lkey | evt.which == Rkey)) {
         tutorial_6();
       }
     }
@@ -553,7 +563,7 @@
       $('#frame3').hide();
     }
     if (mix_flag) {
-      $('#frame5').hide();
+      $('#frame2').hide();
     }
     clean_image();
     $('#frame6').show();
@@ -584,11 +594,12 @@
     document.getElementById('trialNumber').innerHTML = trial_num++;
     $('#progressReport').show();
 
+
     $(document).on("keypress.trialWait", PressedKey2);
 
     function PressedKey2(evt) {
       evt.preventDefault();
-      if (evt.which == Lkey | evt.which == Rkey) {
+      if (controller & (evt.which == Lkey | evt.which == Rkey)) {
         if (index < ctr_same_color-2) { //这个index可以改，现在的3意味着pure green执行4次，之后的redingreen一次，总共5次
           res = evt.which == Rkey ? 1 : 0;
           res_list.push(res);
@@ -609,7 +620,7 @@
 
           function PressedKey2_1(evt) {
             evt.preventDefault();
-            if (evt.which == Lkey | evt.which == Rkey) {
+            if (controller & (evt.which == Lkey | evt.which == Rkey)) {
               res = evt.which == Rkey ? 1 : 0;
               res_list.push(res);
               //index改成0 方便之后用
@@ -636,7 +647,7 @@
 
     function PressedKey3(evt) {
       evt.preventDefault();
-      if (evt.which == Lkey | evt.which == Rkey) {
+      if (controller & (evt.which == Lkey | evt.which == Rkey)) {
         if (index < ctr_same_color-2) {
           res = evt.which == Rkey ? 1 : 0;
           res_list.push(res);
@@ -657,7 +668,7 @@
 
           function PressedKey3_1(evt) {
             evt.preventDefault();
-            if (evt.which == Lkey | evt.which == Rkey) {
+            if (controller & (evt.which == Lkey | evt.which == Rkey)) {
               res = evt.which == Rkey ? 1 : 0;
               res_list.push(res);
               //index改成0 方便之后用
@@ -688,7 +699,7 @@
 
     function PressedKey7(evt) {
       evt.preventDefault();
-      if (evt.which == Lkey | evt.which == Rkey) {
+      if (controller & (evt.which == Lkey | evt.which == Rkey)) {
         if (index < ctr_same_color-2) {
           res = evt.which == Rkey ? 1 : 0;
           res_list.push(res);
@@ -713,7 +724,7 @@
 
           function PressedKey7_1(evt) {
             evt.preventDefault();
-            if (evt.which == Lkey | evt.which == Rkey) {
+            if (controller & (evt.which == Lkey | evt.which == Rkey)) {
               res = evt.which == Rkey ? 1 : 0;
               res_list.push(res);
               //index改成0 方便之后用
