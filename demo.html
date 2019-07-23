@@ -231,7 +231,7 @@
 </div>
 
 <div id="progressReport" ; class='trialDiv'>
-  Trial <span id="trialNumber">1</span> of <span id="totalTrialNumber">50</span>;
+  Trial <span id="trialNumber">1</span> of <span id="totalTrialNumber">5</span>;
   <!-- THIS NUMBER WILL NEED TO BE CHANGED IF THE NUMBER OF TRIALS CHANGES -->
 </div>
 
@@ -267,7 +267,7 @@
   var arr_r_remaining = [red_circle_ver, red_circle_hor];
 
   // same color mode run 5 times
-  var ctr_same_color = 50;
+  var ctr_same_color = 5;
   var trial_num = 1;
 
   //display_list to save the generated answere, res_list is the human answer
@@ -672,37 +672,59 @@
 
   function trial_red_or_green() {
     $(document).off("keypress.trialWait");
-    $('#frame1').hide();
-    $('#frame2').hide();
-    $('#frame3').hide();
-    $('#frame4').hide();
-    $('#frame5').hide();
     $('#frame6').hide();
     $('#hor_ver').show();
 
     if (Math.floor(Math.random() * 2) == 0) {
-      rand_green_in_red();
+      rand_red();
     } else {
-      rand_red_in_green();
+      rand_green();
     }
+
     document.getElementById('trialNumber').innerHTML = trial_num++;
     $('#progressReport').show();
+
     $(document).on("keypress.trialWait", PressedKey7);
 
     function PressedKey7(evt) {
       evt.preventDefault();
-      if (ctr_same_color > 1 & (evt.which == Lkey | evt.which == Rkey)) {
-        res = evt.which == Rkey ? 1 : 0;
-        ctr_same_color -= 1;
-        res_list.push(res);
-        trial_red_or_green();
-      } else if (ctr_same_color == 1) {
-        AfterSuccessDataSaving();
+      if (evt.which == Lkey | evt.which == Rkey) {
+        if (index < ctr_same_color-2) {
+          res = evt.which == Rkey ? 1 : 0;
+          res_list.push(res);
+
+          trial_red_or_green();
+          index += 1;
+        } else {
+          $(document).off("keypress.trialWait");
+          $('#frame6').hide();
+          $('#hor_ver').show();
+
+          if (Math.floor(Math.random() * 2) == 0) {
+            rand_green_in_red();
+          } else {
+            rand_red_in_green();
+          }
+
+          document.getElementById('trialNumber').innerHTML = trial_num++;
+          $('#progressReport').show();
+
+          $(document).on("keypress.trialWait", PressedKey7_1);
+
+          function PressedKey7_1(evt) {
+            evt.preventDefault();
+            if (evt.which == Lkey | evt.which == Rkey) {
+              res = evt.which == Rkey ? 1 : 0;
+              res_list.push(res);
+              //index改成0 方便之后用
+              index = 0;
+              AfterSuccessDataSaving();
+            }
+          }
+        }
       }
     }
   }
-
-
 
   function AfterSuccessDataSaving() {
     clean_image();
