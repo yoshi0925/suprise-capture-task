@@ -298,6 +298,9 @@
     dot
   ];
 
+  var createdTime = 0;
+  var clickedTime = 0;
+
   var imgWrap = [];
 
   var controller = false;
@@ -391,7 +394,9 @@
       show_image(p, 250, 250, l);
     }
     display_list.push(temp_list);
+
     controller = true;
+    createdTime = Date.now();
   }
 
   async function rand_green() {
@@ -423,7 +428,9 @@
       show_image(p, 250, 250, l);
     }
     display_list.push(temp_list);
+
     controller = true;
+    createdTime = Date.now();
   }
 
   async function rand_red_in_green() {
@@ -466,7 +473,9 @@
       show_image(p, 250, 250, l);
     }
     display_list.push(temp_list);
+
     controller = true;
+    createdTime = Date.now();
   }
 
   async function rand_green_in_red() {
@@ -510,7 +519,9 @@
       show_image(p, 250, 250, l);
     }
     display_list.push(temp_list);
+
     controller = true;
+    createdTime = Date.now();
   }
 
   function tutorial_1() {
@@ -656,13 +667,17 @@
       if (controller & (evt.which == Lkey | evt.which == Rkey)) {
         if (index < ctr_same_color-2) { //这个index可以改，现在的3意味着pure green执行4次，之后的redingreen一次，总共5次
           res = evt.which == Rkey ? "vertical" : "horizontal";
-          res_list.push(res);
+          clickedTime = Date.now();
+          time = clickedTime - createdTime;
+          res_list.push([res,time]);
 
           trial_pure_green();
           index += 1;
         } else { //这里为了防止重复call，从tutorial_5复制过来了一段，记得改frame hide/show和pressedKey
           res = evt.which == Rkey ? "vertical" : "horizontal";
-          res_list.push(res);
+          clickedTime = Date.now();
+          time = clickedTime - createdTime;
+          res_list.push([res,time]);
 
           $(document).off("keypress.trialWait");
           $('#frame6').hide();
@@ -679,7 +694,10 @@
             evt.preventDefault();
             if (controller & (evt.which == Lkey | evt.which == Rkey)) {
               res = evt.which == Rkey ? "vertical" : "horizontal";
-              res_list.push(res);
+              clickedTime = Date.now();
+              time = clickedTime - createdTime;
+              res_list.push([res,time]);
+
               //index改成0 方便之后用
               index = 0;
               save();
@@ -707,13 +725,17 @@
       if (controller & (evt.which == Lkey | evt.which == Rkey)) {
         if (index < ctr_same_color-2) {
           res = evt.which == Rkey ? "vertical" : "horizontal";
-          res_list.push(res);
+          clickedTime = Date.now();
+          time = clickedTime - createdTime;
+          res_list.push([res,time]);
 
           trial_pure_red();
           index += 1;
         } else {
           res = evt.which == Rkey ? "vertical" : "horizontal";
-          res_list.push(res);
+          clickedTime = Date.now();
+          time = clickedTime - createdTime;
+          res_list.push([res,time]);
 
           $(document).off("keypress.trialWait");
           $('#frame6').hide();
@@ -730,7 +752,10 @@
             evt.preventDefault();
             if (controller & (evt.which == Lkey | evt.which == Rkey)) {
               res = evt.which == Rkey ? "vertical" : "horizontal";
-              res_list.push(res);
+              clickedTime = Date.now();
+              time = clickedTime - createdTime;
+              res_list.push([res,time]);
+
               //index改成0 方便之后用
               index = 0;
               save();
@@ -762,13 +787,17 @@
       if (controller & (evt.which == Lkey | evt.which == Rkey)) {
         if (index < ctr_same_color-2) {
           res = evt.which == Rkey ? "vertical" : "horizontal";
-          res_list.push(res);
+          clickedTime = Date.now();
+          time = clickedTime - createdTime;
+          res_list.push([res,time]);
 
           trial_red_or_green();
           index += 1;
         } else {
           res = evt.which == Rkey ? "vertical" : "horizontal";
-          res_list.push(res);
+          clickedTime = Date.now();
+          time = clickedTime - createdTime;
+          res_list.push([res,time]);
 
           $(document).off("keypress.trialWait");
           $('#frame6').hide();
@@ -789,7 +818,9 @@
             evt.preventDefault();
             if (controller & (evt.which == Lkey | evt.which == Rkey)) {
               res = evt.which == Rkey ? "vertical" : "horizontal";
-              res_list.push(res);
+              clickedTime = Date.now();
+              time = clickedTime - createdTime;
+              res_list.push([res,time]);
               //index改成0 方便之后用
               index = 0;
               save();
