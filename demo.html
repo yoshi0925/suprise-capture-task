@@ -161,10 +161,10 @@
 </div>
 
 <div id='frame1' ; class='trialDiv'>
-  <p>On each trial, you'll see five shapes and need to identify direction of the line inside the diamond-shaped target as possible.
-    <br> On each trial, there will be only one diamond shape. Press <b>"Z"</b> key if the line is horizontal, press <b>"M"</b> key if the line is vertical.
-    <br> You will given 2 seconds for each trial.
-    <br>Please keep your eyes at the dot in the middle.
+  <p>On each trial, you'll see five shapes and need to identify the direction of the line inside the diamond-shaped target as <b>FAST as possible</b>.
+    <br> On each trial, there will be only one diamond shape. Press the <b>"Z"</b> key if the line is horizontal, press the <b>"M"</b> key if the line is vertical.
+    <br> You will be given 2 seconds for each trial.
+    <br> Please keep your eyes on the dot in the middle.
 
     <br> <br> Please press <b>space bar</b> to continue.</p>
 </div>
@@ -173,10 +173,10 @@
 <div id='frame2' ; class='trialDiv'>
   <p>
     <br>
-    <br> You may see something like this(pure green)
+    <br> You may see something like this
     <br> Your goal is to report which way the line is facing inside of the diamond-shaped target.
     <br> Please press <b>"Z"</b> if the line horizontal OR <b>"M"</b> if the line is vertical.
-    <br> You will given 2 seconds for each trial.
+    <br> You will be given 2 seconds for each trial.
     <br> <b>If the pictures are not complete, please maximaze the window.</b>
 
     <br> <br> Please press <b>"Z"</b> to choose the horizontal direction OR <b>"M"</b> to choose the vertical direction as your response.</p>
@@ -188,8 +188,8 @@
 <!-- Target Present Trial Demo -->
 <div id='frame3' ; class='trialDiv'>
   <p>
-    <br> You may also see something like this(pure red)
-    <br> Your goal is <b>the same</b> as previous: report which way the line is facing inside of the diamond-shaped target.
+    <br> You may see something like this
+    <br> Your goal is <b>the same</b> as before: report which way the line is facing inside of the diamond-shaped target.
     <br> Please press <b>"Z"</b> if the line horizontal OR <b>"M"</b> if the line is vertical.
 
     <br> <br> Please press <b>"Z"</b> to choose the horizontal direction OR <b>"M"</b> to choose the vertical direction as your response.</p>
@@ -198,7 +198,7 @@
 <!-- Target Present Trial Demo -->
 <div id='frame4' ; class='trialDiv'>
   <p>
-    <br> You may also see something like this(one red: red in green)
+    <br> You may see something like this
     <br> Your goal is <b>the same</b> as previous: report which way the line is facing inside of the diamond-shaped target.
     <br> Please press <b>"Z"</b> if the line horizontal OR <b>"M"</b> if the line is vertical.
 
@@ -208,7 +208,7 @@
 <!-- Target Present Trial Demo -->
 <div id='frame5' ; class='trialDiv'>
   <p>
-    <br> You may also see something like this(one green: green in red)
+    <br> You may see something like this
     <br> Your goal is <b>the same</b> as previous: report which way the line is facing inside of the diamond-shaped target.
     <br> Please press <b>"Z"</b> if the line horizontal OR <b>"M"</b> if the line is vertical.
 
@@ -217,7 +217,7 @@
 
 <div id='frame6' ; class='trialDiv'>
   <p>
-    <br> The next trail will start after you make a response.
+    <br> The next trial will start after you make a response.
     <br> The sequence will always be like this.
     <br> Are you ready?
     <br> <br> Please press <b>space</b> to continue.</p>
@@ -226,18 +226,18 @@
 <!-- Start page of every group of trials -->
 <div id='frame7' ; class='trialDiv'>
   <p>
-    <br> You can proceed to next round of trials when you are ready.
+    <br> You can proceed to the next round of trials when you are ready.
     <br> <br> Please press <b>any keys</b> to continue.</p>
 </div>
 
 <!-- Trial Page -->
 <div id='hor_ver' ; class='trialDiv'>
   <p>
-    <br> Press 'z' for horizontal, 'm' for vertical.</p>
+    <br> Press 'Z' for horizontal, 'M' for vertical.</p>
 </div>
 
 <div id="progressReport" ; class='trialDiv'>
-  Trial <span id="trialNumber">1</span> of <span id="totalTrialNumber">5</span>;
+  Trial <span id="trialNumber">1</span> of <span id="totalTrialNumber">50</span>;
   <!-- THIS NUMBER WILL NEED TO BE CHANGED IF THE NUMBER OF TRIALS CHANGES -->
 </div>
 
@@ -272,7 +272,7 @@
   var arr_r_remaining = [red_circle_ver, red_circle_hor];
 
   // same color mode run 5 times
-  var ctr_same_color = 5;
+  var ctr_same_color = 50;
   var trial_num = 1;
 
   //display_list to save the generated answere, res_list is the human answer
