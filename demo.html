@@ -79,9 +79,7 @@
   #done {
     display: none;
   }
-  #Color_test{
-    display: none;
-  }
+
 </style>
 
 <div id="save" class="top-div">
@@ -92,6 +90,7 @@
 </div>
 
 <input type="submit" value="Submit" name="submitButton" id="submitButton" style="position: absolute; margin: auto; top: 0; right: 0; bottom: 0; left: 0; width: 50px; height: 100px;" onclick="Saved()">
+<input type="submit" value="Submit" name="submitButton0" id="submitButton0" style="position: absolute; margin: auto; top: 0; right: 0; bottom: 0; left: 0; width: 50px; height: 100px; display: none;" onclick="Saved()">
 
 <div id="instructions">
   <h2> Reaction Time Test </h2>
@@ -187,9 +186,6 @@
     <br> <br> Please press <b>"Z"</b> to choose the horizontal direction OR <b>"M"</b> to choose the vertical direction as your response.</p>
 </div>
 
-<div id='pic' ; style="float: left; clear: both; maring: 50px 0px 0px 0px;">
-</div>
-
 <!-- Target Present Trial Demo -->
 <div id='frame3' ; class='trialDiv'>
   <p>
@@ -246,31 +242,10 @@
   <!-- THIS NUMBER WILL NEED TO BE CHANGED IF THE NUMBER OF TRIALS CHANGES -->
 </div>
 
-
-<!-- Colorblind Test-->
-<section class="container" id="Color_test" style="margin-bottom:15px; padding: 10px 10px; font-family: Verdana, Geneva, sans-serif; color:#333333; font-size:0.9em;">
-
-  <div class="row col-xs-12 col-md-12"><!-- Instructions -->
-
-    <div class="panel panel-primary">
-
-      <div class="panel-body">
-
-        <p>Please look at the picture below, and enter the number that you see in the corresponding boxes</p>
-
-      </div>
-
-    </div>
-    <!-- End Instructions --><!-- Test Body -->
-    <img src="https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/colorblind-test.jpg" alt="Color Test">
-    <form id="number_form">
-      <strong>Enter the number: <input type="number" id="testNumber" name="testNumber"></strong><br>
-    </form>
-
-    <button type="next" id="testButton" form="number_form" value="Next"onclick="ColorTest()">Next</button>
-  </div>
-</section>
-
+<div id="fill" ; class='trialDiv'>
+  <p>
+    <br> Please fill all fields.</p>
+</div>
 
 <!-- Survey -->
 <section class="container" id="Survey" style="margin-bottom:15px; padding: 10px 10px; font-family: Verdana, Geneva, sans-serif; color:#333333; font-size:0.9em;">
@@ -283,7 +258,7 @@
 
       <div class="panel-body">
 
-        <p>Please fill out the following demographics survey before you submit your results. If choosing to not report, please select "Unknown or not reported"</p>
+        <p>Please fill out the following demographics survey before you submit your results. If choosing to not report, please select "Unknown or not reported".</p>
 
       </div>
 
@@ -391,20 +366,56 @@
       </fieldset>
 
     </section>
-  <!-- End Survey Body -->
+      <!-- End Survey Body -->
+
+
+    <div class="row col-xs-12 col-md-12" ><!-- Instructions -->
+
+      <div class="panel panel-primary">
+
+        <div class="panel-heading"><strong>Instructions</strong></div>
+
+        <div class="panel-body">
+
+          <p>Please look at the picture below, and enter the number that you see in the corresponding boxes</p>
+
+        </div>
+
+      </div>
+      <!-- End Instructions --><!-- Test Body -->
+      <div id="test_pic" style="float: left; clear: both; maring: 50px 0px 0px 0px;">
+        <form id="number_form">
+          <strong>Enter the number: <input type="number" id="testNumber" name="testNumber"></strong><br>
+        </form>
+      </div>
+
+      <button type="next" id="testButton" value="Next" onclick="checkValue()">Save</button>
+    </div>
+
+  <!-- End Test Body -->
   </div>
 </section>
 <!-- close container -->
 
+<div id='pic' ; style="float: left; clear: both; maring: 50px 0px 0px 0px;">
+</div>
 
 <!--Beginning of javascript code-->
 <script>
   $('#startExperiment').click(tutorial_1);
   $('.trialDiv').hide();
   $("#Survey").hide();
-  $("#Color_test").hide();
 
   // Global variables
+  //vars not defined from imported js
+  var isTrain = 0;
+  var isTest = 0;
+  var moveLast = 0;
+  function endTime(){
+    return 160;
+  }
+  var currProbe = 1;
+
   var Lkey = 122;
   var Rkey = 109;
   var timeToRespond = false; //this indicates whether or not the subject is allowed to respond with 'same' or 'different'
@@ -419,7 +430,7 @@
   var red_rec_hor = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/red_rec_hor.png";
   var red_rec_ver = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/red_rec_ver.png";
   var dot = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/900px-Maya_1.svg.png";
-  //var color_blind_test = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/colorblind-test.jpg";
+  var color_blind_test = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/colorblind-test.jpg";
 
   var arr_g = [green_rec_hor, green_rec_ver];
   var arr_r = [red_rec_hor, red_rec_ver];
@@ -429,8 +440,8 @@
   var arr_g_remaining = [green_circle_ver, green_circle_hor];
   var arr_r_remaining = [red_circle_ver, red_circle_hor];
 
-  // same color mode run 5 times
-  var ctr_same_color = 2;
+  // same color mode run 50 times
+  var ctr_same_color = 50;
   var trial_num = 1;
 
   //display_list to save the generated answere, res_list is the human answer
@@ -453,7 +464,8 @@
     red_circle_ver,
     red_rec_hor,
     red_rec_ver,
-    dot
+    dot,
+    color_blind_test
   ];
 
   var createdTime = 0;
@@ -461,7 +473,15 @@
 
   var imgWrap = [];
 
+  //timing controller
   var controller = false;
+
+  //survey vars
+  var v1 = "";
+  var v2 = "";
+  var v3 = "";
+  var v4 = "";
+  var if_fill = true;
 
   function preloadImg(arr) {
     for (var i = 0; i < arr.length; i++) {
@@ -486,6 +506,7 @@
     a.click();
 }
 
+
   function show_image(src, width, height, direction) {
     var img = document.createElement("img");
     img.src = src;
@@ -501,6 +522,8 @@
       img.style = "position: absolute; top: 350; left: 600;"
     } else if (direction == "bot_right") {
       img.style = "position: absolute; top: 550px; left: 750px;"
+    } else if (direction == "test_pic") {
+      img.style = "position: absolute; top: 600px; left: 20px;"
     } else {
       var e = new Error('image location error, please check render codes');
       throw e
@@ -521,6 +544,16 @@
       div.removeChild(div.firstChild);
     }
   }
+
+  function getValue(str){
+  	var radio = document.getElementsByName(str);
+  	for (i=0; i<radio.length; i++) {
+  		if (radio[i].checked) {
+  			return(radio[i].value)
+  		}
+  	}
+  }
+
 
   async function rand_red() {
     clean_image();
@@ -989,16 +1022,39 @@
     }
   }
 
-  function save() {
+  async function save() {
     $(document).off("keypress.trialWait");
     clean_image();
     $('#hor_ver').hide();
     $('#progressReport').hide();
+    $('#Survey').show();
 
-    //show_image(color_blind_test, 250, 250, 'top');
-    $('#Color_test').show();
-    //$('#nextButton').show();
+    show_image(color_blind_test, 250, 250, 'test_pic');
+    }
 
+    function checkValue(){
+      var t1 = $("input:radio[name='Gender']").is(":checked");
+      var t2 = $("input:radio[name='Ethnicity']").is(":checked");
+      var t3 = $("input:radio[name='Race']").is(":checked");
+      var t4 = !(isNaN(document.getElementById('testNumber').value) | (document.getElementById('testNumber').value == ""));
+
+      v1 = getValue("Gender");
+      v2 = getValue("Ethnicity");
+      v3 = getValue("Race");
+      v4 = document.getElementById('testNumber').value;
+      if(t1 & t2 & t3 & t4){
+        Saved();
+      }
+      else{
+        alert("Please fill all forms.");
+      }
+    }
+
+  function Saved(){
+    clean_image();
+    $('#submitButton').hide();
+    $('#Survey').hide();
+    $('#done').show();
     // After they are done, send them here:
     // window.location = "https://ucsd.sona-systems.com/webstudy_credit.aspx?experiment_id=1267&credit_token=805f6634de5a46b3aecffe2818d8d90c&survey_code=" + getParameterByName("code");
     //$('#save').html("Thanks! Please click next button.");
@@ -1008,37 +1064,6 @@
     //var responseData = JSON.stringify(res_list);
     //var displayData = JSON.stringify(display_list);
     //TODO:need to send data to server
-
-    //$(document).on("click", "#nextButton", Survey);
-
-    console.log("Saved!");
-  }
-
-  function ColorTest(){
-    var color_blind_result = document.getElementById('testNumber').value;
-    if(color_blind_result == ""){
-      alert("Please fill out the number field.");
-    }
-  }
-
-
-
-  function Survey(){
-    $('#save').hide();
-    $('#Color_test').hide();
-    $('#Survey').show();
-    var t1 = $("input:radio[name='Gender']").is(":checked");
-		var t2 = $("input:radio[name='Ethnicity']").is(":checked");
-		var t3 = $("input:radio[name='Race']").is(":checked");
-		if(t1 && t2 && t3) {
-			$("#submitButton").show();
-		}
-  }
-
-  function Saved(){
-    $('#submitButton').hide();
-    $('#Survey').hide();
-    $('#done').show();
     $('#')
   }
 
