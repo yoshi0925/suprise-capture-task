@@ -21,7 +21,9 @@
     font-family: Arial, Helvetica;
     font-size: 12pt;
   }
-
+  #nextButton {
+    display: none;
+  }
   #submitButton {
     display: none;
   }
@@ -77,9 +79,12 @@
   #done {
     display: none;
   }
+  #Color_test{
+    display: none;
+  }
 </style>
 
-<div id="save" class="center-div">
+<div id="save" class="top-div">
   Saving data...
 </div>
 <div id="done" class="center-div">
@@ -242,10 +247,162 @@
 </div>
 
 
+<!-- Colorblind Test-->
+<section class="container" id="Color_test" style="margin-bottom:15px; padding: 10px 10px; font-family: Verdana, Geneva, sans-serif; color:#333333; font-size:0.9em;">
+
+  <div class="row col-xs-12 col-md-12"><!-- Instructions -->
+
+    <div class="panel panel-primary">
+
+      <div class="panel-body">
+
+        <p>Please look at the picture below, and enter the number that you see in the corresponding boxes</p>
+
+      </div>
+
+    </div>
+    <!-- End Instructions --><!-- Test Body -->
+    <img src="https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/colorblind-test.jpg" alt="Color Test">
+    <form id="number_form">
+      <strong>Enter the number: <input type="number" id="testNumber" name="testNumber"></strong><br>
+    </form>
+
+    <button type="next" id="testButton" form="number_form" value="Next"onclick="ColorTest()">Next</button>
+  </div>
+</section>
+
+
+<!-- Survey -->
+<section class="container" id="Survey" style="margin-bottom:15px; padding: 10px 10px; font-family: Verdana, Geneva, sans-serif; color:#333333; font-size:0.9em;">
+
+  <div class="row col-xs-12 col-md-12"><!-- Instructions -->
+
+    <div class="panel panel-primary">
+
+      <div class="panel-heading"><strong>Race and Ethnicity Form (voluntary response)</strong></div>
+
+      <div class="panel-body">
+
+        <p>Please fill out the following demographics survey before you submit your results. If choosing to not report, please select "Unknown or not reported"</p>
+
+      </div>
+
+    </div>
+    <!-- End Instructions --><!-- Survey Body -->
+
+    <section>
+      <fieldset>
+          <label>1. What is your gender? </label>
+
+        <div class="radio">
+          <label>
+            <input name="Gender" type="radio" value="Male" />Male
+          </label>
+        </div>
+
+        <div class="radio">
+          <label>
+            <input name="Gender" type="radio" value="Female" />Female
+          </label>
+        </div>
+
+        <div class="radio">
+          <label>
+            <input name="Gender" type="radio" value="Other" />Non-binary or Other
+          </label>
+        </div>
+
+        <div class="radio">
+          <label>
+            <input name="Gender" type="radio" value="NoResponse" />Unknown or not reported
+          </label>
+        </div>
+
+      </fieldset>
+
+      <fieldset>
+        <label>2. Which ethnicity best describes you? </label>
+
+        <div class="radio">
+          <label>
+            <input name="Ethnicity" type="radio" value="Hispanic/Latino" />Hispanic or Latino
+          </label>
+        </div>
+
+        <div class="radio">
+          <label>
+            <input name="Ethnicity" type="radio" value="NonHispanic" />Not Hispanic or Latino
+          </label>
+        </div>
+
+        <div class="radio">
+          <label>
+            <input name="Ethnicity" type="radio" value="NoResponse" />Unknown or not reported
+          </label>
+        </div>
+
+      </fieldset>
+
+      <fieldset>
+        <label>3. Which race best describes you? (Please choose only one) </label>
+
+        <div class="radio">
+          <label>
+            <input name="Race" type="radio" value="AmericanIndian" />American Indian or Alaskan Native
+          </label>
+        </div>
+
+        <div class="radio">
+          <label>
+            <input name="Race" type="radio" value="Asian" />Asian
+          </label>
+        </div>
+
+        <div class="radio">
+          <label>
+            <input name="Race" type="radio" value="PacificIslander" />Pacific Islander
+          </label>
+        </div>
+
+        <div class="radio">
+          <label>
+            <input name="Race" type="radio" value="Black" />Black or African American
+          </label>
+        </div>
+
+        <div class="radio">
+          <label>
+            <input name="Race" type="radio" value="White" />White/Caucasian
+          </label>
+        </div>
+
+        <div class="radio">
+          <label>
+            <input name="Race" type="radio" value="MoreThanOne" />More Than One Race
+          </label>
+        </div>
+
+        <div class="radio">
+          <label>
+            <input name="Race" type="radio" value="NoResponse" />Unknown or not reported
+          </label>
+        </div>
+
+      </fieldset>
+
+    </section>
+  <!-- End Survey Body -->
+  </div>
+</section>
+<!-- close container -->
+
+
 <!--Beginning of javascript code-->
 <script>
   $('#startExperiment').click(tutorial_1);
   $('.trialDiv').hide();
+  $("#Survey").hide();
+  $("#Color_test").hide();
 
   // Global variables
   var Lkey = 122;
@@ -262,6 +419,7 @@
   var red_rec_hor = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/red_rec_hor.png";
   var red_rec_ver = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/red_rec_ver.png";
   var dot = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/900px-Maya_1.svg.png";
+  //var color_blind_test = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/colorblind-test.jpg";
 
   var arr_g = [green_rec_hor, green_rec_ver];
   var arr_r = [red_rec_hor, red_rec_ver];
@@ -272,7 +430,7 @@
   var arr_r_remaining = [red_circle_ver, red_circle_hor];
 
   // same color mode run 5 times
-  var ctr_same_color = 50;
+  var ctr_same_color = 2;
   var trial_num = 1;
 
   //display_list to save the generated answere, res_list is the human answer
@@ -832,28 +990,54 @@
   }
 
   function save() {
+    $(document).off("keypress.trialWait");
     clean_image();
     $('#hor_ver').hide();
     $('#progressReport').hide();
+
+    //show_image(color_blind_test, 250, 250, 'top');
+    $('#Color_test').show();
+    //$('#nextButton').show();
+
     // After they are done, send them here:
     // window.location = "https://ucsd.sona-systems.com/webstudy_credit.aspx?experiment_id=1267&credit_token=805f6634de5a46b3aecffe2818d8d90c&survey_code=" + getParameterByName("code");
-    $('#submitButton').show();
-    $('#save').html("All done, thanks! Please click submit button.");
-    $('#save').show();
-    $('#')
+    //$('#save').html("Thanks! Please click next button.");
+    //$('#save').show();
+    //$('#')
 
     //var responseData = JSON.stringify(res_list);
     //var displayData = JSON.stringify(display_list);
     //TODO:need to send data to server
 
-    $(document).on("click", "#submitButton", Saved);
+    //$(document).on("click", "#nextButton", Survey);
 
     console.log("Saved!");
   }
 
+  function ColorTest(){
+    var color_blind_result = document.getElementById('testNumber').value;
+    if(color_blind_result == ""){
+      alert("Please fill out the number field.");
+    }
+  }
+
+
+
+  function Survey(){
+    $('#save').hide();
+    $('#Color_test').hide();
+    $('#Survey').show();
+    var t1 = $("input:radio[name='Gender']").is(":checked");
+		var t2 = $("input:radio[name='Ethnicity']").is(":checked");
+		var t3 = $("input:radio[name='Race']").is(":checked");
+		if(t1 && t2 && t3) {
+			$("#submitButton").show();
+		}
+  }
+
   function Saved(){
     $('#submitButton').hide();
-    $('#save').hide();
+    $('#Survey').hide();
     $('#done').show();
     $('#')
   }
