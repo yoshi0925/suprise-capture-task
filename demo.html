@@ -254,7 +254,7 @@
 
     <div class="panel panel-primary">
 
-      <div class="panel-heading"><strong>Race and Ethnicity Form (voluntary response)</strong></div>
+      <div class="panel-heading"><strong>Race and Ethnicity Form (!YOU MUST HIT SAVE BUTTON FOR SONA CREDIT!) </strong></div>
 
       <div class="panel-body">
 
@@ -366,6 +366,13 @@
       </fieldset>
 
     </section>
+
+    <section>
+   		 <form id="age_form">
+          <strong>Enter a number for your age: <input type="number" id="ageNumber" name="ageNumber"></strong><br>
+        </form>
+    </section>
+
       <!-- End Survey Body -->
 
 
@@ -385,7 +392,7 @@
       <!-- End Instructions --><!-- Test Body -->
       <div id="test_pic" style="float: left; clear: both; maring: 50px 0px 0px 0px;">
         <form id="number_form">
-          <strong>Enter the number: <input type="number" id="testNumber" name="testNumber"></strong><br>
+          <strong>Enter the number in the picture: <input type="number" id="testNumber" name="testNumber"></strong><br>
         </form>
       </div>
 
@@ -446,6 +453,7 @@
 
   //display_list to save the generated answere, res_list is the human answer
   var res_list = [];
+  var res_time = [];
   var display_list = [];
   var res = "";
 
@@ -481,7 +489,10 @@
   var v2 = "";
   var v3 = "";
   var v4 = "";
+  var v5 = "";
   var if_fill = true;
+
+  var dataToServer={}
 
   function preloadImg(arr) {
     for (var i = 0; i < arr.length; i++) {
@@ -497,15 +508,6 @@
   function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
-
-  function download(content, fileName, contentType) {
-    var a = document.createElement("a");
-    var file = new Blob([content], {type: contentType});
-    a.href = URL.createObjectURL(file);
-    a.download = fileName;
-    a.click();
-}
-
 
   function show_image(src, width, height, direction) {
     var img = document.createElement("img");
@@ -848,7 +850,7 @@
     rand_green();
 
     document.getElementById('trialNumber').innerHTML = trial_num++;
-    $('#progressReport').show();
+    //$('#progressReport').show();
 
 
     $(document).on("keypress.trialWait", PressedKey2);
@@ -860,7 +862,9 @@
           res = evt.which == Rkey ? "vertical" : "horizontal";
           clickedTime = Date.now();
           time = clickedTime - createdTime;
-          res_list.push([res,time]);
+          res_list.push(res);
+          res_time.push(time);
+
 
           trial_pure_green();
           index += 1;
@@ -868,14 +872,15 @@
           res = evt.which == Rkey ? "vertical" : "horizontal";
           clickedTime = Date.now();
           time = clickedTime - createdTime;
-          res_list.push([res,time]);
+          res_list.push(res);
+          res_time.push(time);
 
           $(document).off("keypress.trialWait");
           $('#frame6').hide();
           $('#hor_ver').show();
 
           document.getElementById('trialNumber').innerHTML = trial_num++;
-          $('#progressReport').show();
+          //$('#progressReport').show();
 
           rand_red_in_green();
 
@@ -887,7 +892,8 @@
               res = evt.which == Rkey ? "vertical" : "horizontal";
               clickedTime = Date.now();
               time = clickedTime - createdTime;
-              res_list.push([res,time]);
+              res_list.push(res);
+              res_time.push(time);
 
               //index改成0 方便之后用
               index = 0;
@@ -907,7 +913,7 @@
     rand_red();
 
     document.getElementById('trialNumber').innerHTML = trial_num++;
-    $('#progressReport').show();
+    //$('#progressReport').show();
 
     $(document).on("keypress.trialWait", PressedKey3);
 
@@ -918,7 +924,8 @@
           res = evt.which == Rkey ? "vertical" : "horizontal";
           clickedTime = Date.now();
           time = clickedTime - createdTime;
-          res_list.push([res,time]);
+          res_list.push(res);
+          res_time.push(time);
 
           trial_pure_red();
           index += 1;
@@ -926,7 +933,8 @@
           res = evt.which == Rkey ? "vertical" : "horizontal";
           clickedTime = Date.now();
           time = clickedTime - createdTime;
-          res_list.push([res,time]);
+          res_list.push(res);
+          res_time.push(time);
 
           $(document).off("keypress.trialWait");
           $('#frame6').hide();
@@ -935,7 +943,7 @@
           rand_green_in_red();
 
           document.getElementById('trialNumber').innerHTML = trial_num++;
-          $('#progressReport').show();
+          //$('#progressReport').show();
 
           $(document).on("keypress.trialWait", PressedKey3_1);
 
@@ -945,7 +953,8 @@
               res = evt.which == Rkey ? "vertical" : "horizontal";
               clickedTime = Date.now();
               time = clickedTime - createdTime;
-              res_list.push([res,time]);
+              res_list.push(res);
+              res_time.push(time);
 
               //index改成0 方便之后用
               index = 0;
@@ -969,7 +978,7 @@
     }
 
     document.getElementById('trialNumber').innerHTML = trial_num++;
-    $('#progressReport').show();
+    //$('#progressReport').show();
 
     $(document).on("keypress.trialWait", PressedKey7);
 
@@ -980,7 +989,8 @@
           res = evt.which == Rkey ? "vertical" : "horizontal";
           clickedTime = Date.now();
           time = clickedTime - createdTime;
-          res_list.push([res,time]);
+          res_list.push(res);
+          res_time.push(time);
 
           trial_red_or_green();
           index += 1;
@@ -988,7 +998,8 @@
           res = evt.which == Rkey ? "vertical" : "horizontal";
           clickedTime = Date.now();
           time = clickedTime - createdTime;
-          res_list.push([res,time]);
+          res_list.push(res);
+          res_time.push(time);
 
           $(document).off("keypress.trialWait");
           $('#frame6').hide();
@@ -1001,7 +1012,7 @@
           }
 
           document.getElementById('trialNumber').innerHTML = trial_num++;
-          $('#progressReport').show();
+          //$('#progressReport').show();
 
           $(document).on("keypress.trialWait", PressedKey7_1);
 
@@ -1011,7 +1022,8 @@
               res = evt.which == Rkey ? "vertical" : "horizontal";
               clickedTime = Date.now();
               time = clickedTime - createdTime;
-              res_list.push([res,time]);
+              res_list.push(res);
+              res_time.push(time);
               //index改成0 方便之后用
               index = 0;
               save();
@@ -1037,12 +1049,15 @@
       var t2 = $("input:radio[name='Ethnicity']").is(":checked");
       var t3 = $("input:radio[name='Race']").is(":checked");
       var t4 = !(isNaN(document.getElementById('testNumber').value) | (document.getElementById('testNumber').value == ""));
+	  var t5 = !(isNaN(document.getElementById('ageNumber').value) | (document.getElementById('ageNumber').value == ""));
 
       v1 = getValue("Gender");
       v2 = getValue("Ethnicity");
       v3 = getValue("Race");
       v4 = document.getElementById('testNumber').value;
-      if(t1 & t2 & t3 & t4){
+      v5 = document.getElementById('ageNumber').value;
+
+      if(t1 & t2 & t3 & t4 & t5){
         Saved();
       }
       else{
@@ -1055,16 +1070,57 @@
     $('#submitButton').hide();
     $('#Survey').hide();
     $('#done').show();
-    // After they are done, send them here:
-    // window.location = "https://ucsd.sona-systems.com/webstudy_credit.aspx?experiment_id=1267&credit_token=805f6634de5a46b3aecffe2818d8d90c&survey_code=" + getParameterByName("code");
-    //$('#save').html("Thanks! Please click next button.");
-    //$('#save').show();
-    //$('#')
-
-    //var responseData = JSON.stringify(res_list);
-    //var displayData = JSON.stringify(display_list);
-    //TODO:need to send data to server
-    $('#')
+    SendToServer();
   }
+
+  /* Send the data to the server as JSON: */
+function SendToServer() {
+	var curr_date = new Date();
+	var curID = getParameterByName("id");
+	dataToServer = {
+	  'date': curr_date,
+	  'result_list': JSON.stringify(res_list),
+	  'result_time': JSON.stringify(res_time),
+	  'display_info': JSON.stringify(display_list),
+	  'gender': v1,
+	  'ethnicity': v2,
+	  'race': v3,
+	  'result_color_blind_test': (v4==8),
+	  'number_color_blind_test': v4,
+	  'age': v5,
+	  'curID': curID,
+	};
+	var d = {
+	  'id': getParameterByName("id"),
+	  'experimenter': 'Kirsten',
+	  'experimentName': 'ReactionTime',
+	  'curData': JSON.stringify(dataToServer)
+	};
+	$.post("http://serenceslab.ucsd.edu/experiments/RT_Exp/save.php",
+	  d,
+	  function(data) {
+		/* Get this from SONA by looking for the Completion URL (client-side) on SONA after creating an online SONA study: */
+		window.location = "https://ucsd.sona-systems.com/webstudy_credit.aspx?experiment_id=1661&credit_token=ab4560d23b684ec89438a7ec6fcee9b5&survey_code=" + getParameterByName("id");
+		console.log("Saved!");
+	  }
+	).fail(function(data) {
+		/* Get this from SONA by looking for the Completion URL (client-side) on SONA after creating an online SONA study: */
+		window.location = "https://ucsd.sona-systems.com/webstudy_credit.aspx?experiment_id=1661&credit_token=ab4560d23b684ec89438a7ec6fcee9b5&survey_code=" + getParameterByName("id");
+		console.log("not saved!");
+	});
+}
+
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+       name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2]);
+}
+
+
+
 
 </script>
