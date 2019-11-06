@@ -331,7 +331,7 @@
 
       </div>
       <!-- End Instructions --><!-- Test Body -->
-      <div id="test_pic" style="float: left; clear: both; maring: 50px 0px 0px 0px;">
+      <div id="test_pic" style="float: left; clear: both; margin: 50px 0px 0px 0px;">
         <form id="number_form">
           <strong>Enter the number in the picture: <input type="number" id="testNumber" name="testNumber"></strong><br>
         </form>
@@ -345,7 +345,7 @@
 </section>
 <!-- close container -->
 
-<div id='pic' ; style="float: left; clear: both; maring: 50px 0px 0px 0px;">
+<div id='pic' ; style="float: left; clear: both; margin: 50px 0px 0px 0px;">
 </div>
 
 <!--Beginning of javascript code-->
@@ -366,6 +366,7 @@
 
   const Lkey = 122;
   const Rkey = 109;
+  const placeHolderKey = 45; // the `ins` key, use to hack the 3-sec constraint
   var timeToRespond = false; //this indicates whether or not the subject is allowed to respond with 'same' or 'different'
   var timeToMoveOn = true; //this indicates whether or not the subject is allowed to move on to the next trial
 
@@ -394,14 +395,16 @@
   const arr_r_remaining = [red_circle_ver, red_circle_hor];
 
   // same color mode run 50 times
-  const ctr_same_color = 5;
+  const ctr_same_color = 2;
   var trial_num = 1;
+  var system_idx = 4; 
 
   //display_list to save the generated answere, res_list is the human answer
   var res_list = [];
   var res_time = [];
   var display_list = [];
   var canvas_list = [];
+  var surprise_list = [];
   var res = "";
 
   var index = 0;
@@ -521,10 +524,10 @@
 
   function rand_canvas(){
     let tar_canvas = arr_c[Math.floor(Math.random() * 2)];
-    if( !canvas_emit_controller ){
-      canvas_emit_controller = true;
-      return;
-    }
+    // if( !canvas_emit_controller ){
+    //   canvas_emit_controller = true;
+    //   return;
+    // }
     show_image(tar_canvas, 800, 450, 'canvas');
     let canvas_data = tar_canvas.match(/green_canvas|red_canvas/g);
     canvas_list.push(canvas_data);
@@ -535,8 +538,20 @@
     clean_image();
     controller = false;
 
-    rand_canvas();
+    if(canvas_emit_controller){
+      show_image(dot, 250, 250, 'center');
+      await sleep(sleep_time);
+
+      rand_canvas();
+      await sleep(2 * sleep_time);
+      clean_image();
+    }else{
+      canvas_emit_controller = true;
+    }
+
+    show_image(dot, 250, 250, 'center');
     await sleep(sleep_time);
+
     clean_image();
     show_image(dot, 250, 250, 'center');
 
@@ -552,8 +567,7 @@
       return value != tar_loc;
     });
 
-    var i;
-    for (i = 0; i < arr_loc_remaining.length; i++) {
+    for (let i = 0; i < arr_loc_remaining.length; i++) {
       var p = arr_r_remaining[Math.floor(Math.random() * 2)];
       var l = arr_loc_remaining[i];
 
@@ -572,8 +586,20 @@
     clean_image();
     controller = false;
 
-    rand_canvas();
+    if(canvas_emit_controller){
+      show_image(dot, 250, 250, 'center');
+      await sleep(sleep_time);
+
+      rand_canvas();
+      await sleep(2 * sleep_time);
+      clean_image();
+    }else{
+      canvas_emit_controller = true;
+    }
+
+    show_image(dot, 250, 250, 'center');
     await sleep(sleep_time);
+
     clean_image();
     show_image(dot, 250, 250, 'center');
 
@@ -589,8 +615,7 @@
       return value != tar_loc;
     });
 
-    var i;
-    for (i = 0; i < arr_loc_remaining.length; i++) {
+    for (let i = 0; i < arr_loc_remaining.length; i++) {
       var p = arr_g_remaining[Math.floor(Math.random() * 2)];
       var l = arr_loc_remaining[i];
 
@@ -609,8 +634,17 @@
     clean_image();
     controller = false;
 
-    rand_canvas();
+    show_image(dot, 250, 250, 'center');
     await sleep(sleep_time);
+    clean_image();
+
+    rand_canvas();
+    await sleep(2 * sleep_time);
+    clean_image();
+
+    show_image(dot, 250, 250, 'center');
+    await sleep(sleep_time);
+
     clean_image();
     show_image(dot, 250, 250, 'center');
 
@@ -637,8 +671,7 @@
       return value != tar_loc2;
     });
 
-    var i;
-    for (i = 0; i < arr_loc_remaining2.length; i++) {
+    for (let i = 0; i < arr_loc_remaining2.length; i++) {
       var p = arr_g_remaining[Math.floor(Math.random() * 2)]
       var l = arr_loc_remaining2[i];
 
@@ -657,8 +690,17 @@
     clean_image();
     controller = false;
     
-    rand_canvas();
+    show_image(dot, 250, 250, 'center');
     await sleep(sleep_time);
+    clean_image();
+
+    rand_canvas();
+    await sleep(2 * sleep_time);
+    clean_image();
+
+    show_image(dot, 250, 250, 'center');
+    await sleep(sleep_time);
+
     clean_image();
     show_image(dot, 250, 250, 'center');
 
@@ -686,8 +728,7 @@
       return value != tar_loc2;
     });
 
-    var i;
-    for (i = 0; i < arr_loc_remaining2.length; i++) {
+    for (let i = 0; i < arr_loc_remaining2.length; i++) {
       var p = arr_r_remaining[Math.floor(Math.random() * 2)]
       var l = arr_loc_remaining2[i];
 
@@ -719,7 +760,7 @@
   }
 
 
-  function trial_red_or_green() {
+  async function trial_red_or_green() {
     $(document).off("keypress.trialWait");
     $('#frame6').hide();
     $('#hor_ver').show();
@@ -729,7 +770,6 @@
     } else {
       rand_green();
     }
-
     document.getElementById('trialNumber').innerHTML = trial_num++;
     $('#progressReport').show();
 
@@ -744,15 +784,54 @@
           time = clickedTime - createdTime;
           res_list.push(res);
           res_time.push(time);
+          surprise_list.push(0);
 
           trial_red_or_green();
           index += 1;
-        } else {
+        } 
+        else if(system_idx - 1 > 0){
           res = evt.which == Rkey ? "vertical" : "horizontal";
           clickedTime = Date.now();
           time = clickedTime - createdTime;
           res_list.push(res);
           res_time.push(time);
+
+          $(document).off("keypress.trialWait");
+          $('#frame6').hide();
+          $('#hor_ver').show();
+
+          if (Math.floor(Math.random() * 2) == 0) {
+            rand_green_in_red();
+          } else {
+            rand_red_in_green();
+          }
+
+          document.getElementById('trialNumber').innerHTML = trial_num++;
+          $(document).on("keypress.trialWait", PressedKey7_0);
+
+          function PressedKey7_0(evt) {
+            evt.preventDefault();
+            if (controller & (evt.which == Lkey | evt.which == Rkey)) {
+              res = evt.which == Rkey ? "vertical" : "horizontal";
+              clickedTime = Date.now();
+              time = clickedTime - createdTime;
+              res_list.push(res);
+              res_time.push(time);
+              surprise_list.push(1);
+
+              index = 0//set index back to 0 to loop whole system
+              system_idx -= 1;
+              trial_red_or_green();
+            } 
+          }
+        }
+        else {
+          res = evt.which == Rkey ? "vertical" : "horizontal";
+          clickedTime = Date.now();
+          time = clickedTime - createdTime;
+          res_list.push(res);
+          res_time.push(time);
+          surprise_list.push(1);
 
           $(document).off("keypress.trialWait");
           $('#frame6').hide();
@@ -777,7 +856,9 @@
               time = clickedTime - createdTime;
               res_list.push(res);
               res_time.push(time);
-              //index改成0 方便之后用
+              surprise_list.push(1);
+
+              // clear index, for other loop cases uses
               index = 0;
               save();
             }
