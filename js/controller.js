@@ -174,7 +174,7 @@
     // }
     showImage(tar_canvas, 800, 450, 'canvas');
     let canvas_data = tar_canvas.match(/green_canvas|red_canvas/g);
-    canvasInfo.push(canvas_data);
+    canvasInfo.push(canvas_data[0]);
   }
 
   async function showCanvas(){
