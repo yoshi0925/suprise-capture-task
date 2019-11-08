@@ -40,23 +40,23 @@
 
   // same color mode run 50 times
   const SAME_COLOR_CTR = 2;
-  var trial_num = 1;
-  var system_idx = 4; 
+  var trialNumber = 1;
+  var systemIndex = 4; 
 
   //display_list to save the generated answere, res_list is the human answer
-  var res_list = [];
-  var res_time = [];
-  var display_list = [];
-  var canvas_list = [];
-  var surprise_list = [];
+  var resultResponse = [];
+  var resultTime = [];
+  var displayInfo = [];
+  var canvasInfo = [];
+  var surpriseInfo = [];
   var res = "";
 
   var index = 0;
 
   // flags for random cases organization
-  var g_flag = false;
-  var r_flag = false;
-  var mix_flag = false;
+  var greenFlag = false;
+  var redFlag = false;
+  var mixFlag = false;
 
   // preload the images
   const IMAGE_ARR = [
@@ -174,30 +174,31 @@
     // }
     showImage(tar_canvas, 800, 450, 'canvas');
     let canvas_data = tar_canvas.match(/green_canvas|red_canvas/g);
-    canvas_list.push(canvas_data);
+    canvasInfo.push(canvas_data);
   }
 
-
+  async function showCanvas(){
+    if(firstCanvasIgnore){
+        showImage(DOT, 250, 250, 'center');
+        await sleep(SLEEP_TIME);
+  
+        generateCanvas();
+        await sleep(2 * SLEEP_TIME);
+        cleanImage();
+      }else{
+        firstCanvasIgnore = true;
+      }
+  
+      showImage(DOT, 250, 250, 'center');
+      await sleep(SLEEP_TIME);
+  
+      showImage(DOT, 250, 250, 'center');
+  }
   async function generateRed() {
     cleanImage();
     controller = false;
 
-    if(firstCanvasIgnore){
-      showImage(DOT, 250, 250, 'center');
-      await sleep(SLEEP_TIME);
-
-      generateCanvas();
-      await sleep(2 * SLEEP_TIME);
-      cleanImage();
-    }else{
-      firstCanvasIgnore = true;
-    }
-
-    showImage(DOT, 250, 250, 'center');
-    await sleep(SLEEP_TIME);
-
-    cleanImage();
-    showImage(DOT, 250, 250, 'center');
+    await showCanvas();
 
     var tar_pic = RED_ARRAY[Math.floor(Math.random() * 2)];
     var tar_loc = LOCATION_ARRAY[Math.floor(Math.random() * 5)];
@@ -220,7 +221,7 @@
 
       showImage(p, 250, 250, l);
     }
-    display_list.push(temp_list.sort());
+    displayInfo.push(temp_list.sort());
 
     controller = true;
     createdTime = Date.now();
@@ -230,22 +231,7 @@
     cleanImage();
     controller = false;
 
-    if(firstCanvasIgnore){
-      showImage(DOT, 250, 250, 'center');
-      await sleep(SLEEP_TIME);
-
-      generateCanvas();
-      await sleep(2 * SLEEP_TIME);
-      cleanImage();
-    }else{
-      firstCanvasIgnore = true;
-    }
-
-    showImage(DOT, 250, 250, 'center');
-    await sleep(SLEEP_TIME);
-
-    cleanImage();
-    showImage(DOT, 250, 250, 'center');
+    await showCanvas();
 
     var tar_pic = GREEN_ARRAY[Math.floor(Math.random() * 2)];
     var tar_loc = LOCATION_ARRAY[Math.floor(Math.random() * 5)];
@@ -268,7 +254,7 @@
 
       showImage(p, 250, 250, l);
     }
-    display_list.push(temp_list.sort());
+    displayInfo.push(temp_list.sort());
 
     controller = true;
     createdTime = Date.now();
@@ -278,19 +264,7 @@
     cleanImage();
     controller = false;
 
-    showImage(DOT, 250, 250, 'center');
-    await sleep(SLEEP_TIME);
-    cleanImage();
-
-    generateCanvas();
-    await sleep(2 * SLEEP_TIME);
-    cleanImage();
-
-    showImage(DOT, 250, 250, 'center');
-    await sleep(SLEEP_TIME);
-
-    cleanImage();
-    showImage(DOT, 250, 250, 'center');
+    await showCanvas();
 
     var tar_pic = GREEN_ARRAY[Math.floor(Math.random() * 2)];
     var tar_loc = LOCATION_ARRAY[Math.floor(Math.random() * 5)];
@@ -324,7 +298,7 @@
 
       showImage(p, 250, 250, l);
     }
-    display_list.push(temp_list.sort());
+    displayInfo.push(temp_list.sort());
 
     controller = true;
     createdTime = Date.now();
@@ -334,19 +308,7 @@
     cleanImage();
     controller = false;
     
-    showImage(DOT, 250, 250, 'center');
-    await sleep(SLEEP_TIME);
-    cleanImage();
-
-    generateCanvas();
-    await sleep(2 * SLEEP_TIME);
-    cleanImage();
-
-    showImage(DOT, 250, 250, 'center');
-    await sleep(SLEEP_TIME);
-
-    cleanImage();
-    showImage(DOT, 250, 250, 'center');
+    await showCanvas();
 
     var tar_pic = RED_ARRAY[Math.floor(Math.random() * 2)];
     var tar_loc = LOCATION_ARRAY[Math.floor(Math.random() * 5)];
@@ -381,7 +343,7 @@
 
       showImage(p, 250, 250, l);
     }
-    display_list.push(temp_list.sort());
+    displayInfo.push(temp_list.sort());
 
     controller = true;
     createdTime = Date.now();
@@ -414,7 +376,7 @@
     } else {
       generateGreen();
     }
-    document.getElementById('trialNumber').innerHTML = trial_num++;
+    document.getElementById('trialNumber').innerHTML = trialNumber++;
     $('#progressReport').show();
 
     $(document).on("keypress.trialWait", PressedKey7);
@@ -423,22 +385,13 @@
       evt.preventDefault();
       if (controller & (evt.which == L_KEY | evt.which == R_KEY)) {
         if (index < SAME_COLOR_CTR-2) {
-          res = evt.which == R_KEY ? "vertical" : "horizontal";
-          clickedTime = Date.now();
-          time = clickedTime - createdTime;
-          res_list.push(res);
-          res_time.push(time);
-          surprise_list.push(0);
+          saveData(evt, 0);
 
           startTrailRedOrGreen();
           index += 1;
         } 
-        else if(system_idx - 1 > 0){
-          res = evt.which == R_KEY ? "vertical" : "horizontal";
-          clickedTime = Date.now();
-          time = clickedTime - createdTime;
-          res_list.push(res);
-          res_time.push(time);
+        else if(systemIndex - 1 > 0){
+          saveData(evt, 0)
 
           $(document).off("keypress.trialWait");
           $('#frame6').hide();
@@ -450,32 +403,22 @@
             generateRedInGreen();
           }
 
-          document.getElementById('trialNumber').innerHTML = trial_num++;
+          document.getElementById('trialNumber').innerHTML = trialNumber++;
           $(document).on("keypress.trialWait", PressedKey7_0);
 
           function PressedKey7_0(evt) {
             evt.preventDefault();
             if (controller & (evt.which == L_KEY | evt.which == R_KEY)) {
-              res = evt.which == R_KEY ? "vertical" : "horizontal";
-              clickedTime = Date.now();
-              time = clickedTime - createdTime;
-              res_list.push(res);
-              res_time.push(time);
-              surprise_list.push(1);
+              saveData(evt, 1)
 
               index = 0//set index back to 0 to loop whole system
-              system_idx -= 1;
+              systemIndex -= 1;
               startTrailRedOrGreen();
             } 
           }
         }
         else {
-          res = evt.which == R_KEY ? "vertical" : "horizontal";
-          clickedTime = Date.now();
-          time = clickedTime - createdTime;
-          res_list.push(res);
-          res_time.push(time);
-          surprise_list.push(1);
+          saveData(evt, 1);
 
           $(document).off("keypress.trialWait");
           $('#frame6').hide();
@@ -487,7 +430,7 @@
             generateRedInGreen();
           }
 
-          document.getElementById('trialNumber').innerHTML = trial_num++;
+          document.getElementById('trialNumber').innerHTML = trialNumber++;
           //$('#progressReport').show();
 
           $(document).on("keypress.trialWait", PressedKey7_1);
@@ -495,12 +438,7 @@
           function PressedKey7_1(evt) {
             evt.preventDefault();
             if (controller & (evt.which == L_KEY | evt.which == R_KEY)) {
-              res = evt.which == R_KEY ? "vertical" : "horizontal";
-              clickedTime = Date.now();
-              time = clickedTime - createdTime;
-              res_list.push(res);
-              res_time.push(time);
-              surprise_list.push(1);
+              saveData(evt, 1);
 
               // clear index, for other loop cases uses
               index = 0;
@@ -510,6 +448,15 @@
         }
       }
     }
+
+      function saveData(evt, surprise) {
+          res = evt.which == R_KEY ? "vertical" : "horizontal";
+          clickedTime = Date.now();
+          time = clickedTime - createdTime;
+          resultResponse.push(res);
+          resultTime.push(time);
+          surpriseInfo.push(surprise);
+      }
   }
 
   async function showSurvey() {
@@ -557,10 +504,10 @@ function SendToServer() {
 	var curID = getParameterByName("id");
 	dataToServer = {
 	  'date': curr_date,
-	  'result_list': JSON.stringify(res_list),
-	  'result_time': JSON.stringify(res_time),
-	  'display_info': JSON.stringify(display_list),
-    'canvas_info': JSON.stringify(canvas_list),
+	  'result_list': JSON.stringify(resultResponse),
+	  'result_time': JSON.stringify(resultTime),
+	  'display_info': JSON.stringify(displayInfo),
+      'canvas_info': JSON.stringify(canvasInfo.unshift("no_canvas_at_beginning")),
 	  'gender': v1,
 	  'ethnicity': v2,
 	  'race': v3,
