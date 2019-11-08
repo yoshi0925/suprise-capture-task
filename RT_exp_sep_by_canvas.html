@@ -1,86 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Perception and Cognition Lab</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="http://serenceslab.ucsd.edu/images/favicon.ico">
+</head>
+
+<body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://psyc241.ucsd.edu/Chaipat/TB_PCL_vWM_2AFC/js/vismemCC.js"></script>
 <script src="./js/controller.js"></script>
-
-<style>
-  .trialDiv {
-    /* border: 2px solid gray;*/
-    border: 0px;
-    padding: auto;
-    width: auto;
-    position: relative;
-    top: 50px;
-    left: 50%;
-    /* bring your own prefixes */
-    transform: translate(-50%, -50%);
-    text-align: center;
-    display: none;
-  }
-
-  body {
-    font-family: Arial, Helvetica;
-    font-size: 12pt;
-  }
-  #nextButton {
-    display: none;
-  }
-  #submitButton {
-    display: none;
-  }
-
-  #instructions {
-    width: 60%;
-    margin: 0 auto;
-    text-align: center;
-    margin-top: 100px;
-  }
-
-  #startExperiment {
-    color: rgb(200, 200, 200);
-    text-decoration: none;
-  }
-
-  #startExperiment:hover {
-    color: white;
-  }
-
-  #startExperimentButton {
-    width: 200px;
-    text-align: center;
-    border: 4px outset gray;
-    background: gray;
-    padding: 5px;
-    margin: 0 auto;
-  }
-
-  #meter {
-    width: 10cm;
-    height: 10cm;
-  }
-
-  .instr {
-    display: none;
-  }
-
-  .center-div {
-    position: absolute;
-    margin: auto;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    width: 320px;
-    height: 100px;
-  }
-
-  #save {
-    display: none;
-  }
-  #done {
-    display: none;
-  }
-
-</style>
 
 <div id="save" class="top-div">
   Saving data...
@@ -354,3 +283,5 @@
   $('.trialDiv').hide();
   $("#Survey").hide();
 </script>
+</body>
+</html>
