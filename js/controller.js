@@ -8,38 +8,38 @@
   }
   var currProbe = 1;
 
-  const Lkey = 122;
-  const Rkey = 109;
+  const L_KEY = 122;
+  const R_KEY = 109;
   const placeHolderKey = 45; // the `ins` key, use to hack the 3-sec constraint
   var timeToRespond = false; //this indicates whether or not the subject is allowed to respond with 'same' or 'different'
   var timeToMoveOn = true; //this indicates whether or not the subject is allowed to move on to the next trial
 
-  const green_circle_hor = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/image/green_circle_hor.png";
-  const green_circle_ver = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/image/green_circle_ver.png";
-  const green_rec_hor = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/image/green_rec_hor.png";
-  const green_rec_ver = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/image/green_rec_ver.png";
-  const red_circle_hor = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/image/red_circle_hor.png";
-  const red_circle_ver = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/image/red_circle_ver.png";
-  const red_rec_hor = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/image/red_rec_hor.png";
-  const red_rec_ver = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/image/red_rec_ver.png";
-  const green_canvas = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/image/green_canvas.png";
-  const red_canvas = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/image/red_canvas.png";
-  const dot = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/image/dot.png";
-  const color_blind_test = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/image/colorblind-test.jpg";
+  const GREEN_CIRCLE_HOR = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/image/green_circle_hor.png";
+  const GREEN_CIRCLE_VER = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/image/green_circle_ver.png";
+  const GREEN_REC_HOR = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/image/green_rec_hor.png";
+  const GREEN_REC_VER = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/image/green_rec_ver.png";
+  const RED_CIRCLE_HOR = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/image/red_circle_hor.png";
+  const RED_CIRCLE_VER = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/image/red_circle_ver.png";
+  const RED_REC_HOR = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/image/red_rec_hor.png";
+  const RED_REC_VER = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/image/red_rec_ver.png";
+  const GREEN_CANVAS = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/image/green_canvas.png";
+  const RED_CANVAS = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/image/red_canvas.png";
+  const DOT = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/image/dot.png";
+  const COLOR_BLIND_TEST = "https://raw.githubusercontent.com/yoshi0925/suprise-capture-task/master/image/colorblind-test.jpg";
 
-  const arr_g = [green_rec_hor, green_rec_ver];
-  const arr_r = [red_rec_hor, red_rec_ver];
-  const arr_c = [green_canvas, red_canvas];
+  const GREEN_ARRAY = [GREEN_REC_HOR, GREEN_REC_VER];
+  const RED_ARRAY = [RED_REC_HOR, RED_REC_VER];
+  const CANVAS_ARRAY = [GREEN_CANVAS, RED_CANVAS];
 
-  const sleep_time = 1000;
+  const SLEEP_TIME = 1000;
 
-  const arr_loc = ['top', 'mid_left', 'mid_right', 'bot_left', 'bot_right'];
+  const LOCATION_ARRAY = ['top', 'mid_left', 'mid_right', 'bot_left', 'bot_right'];
 
-  const arr_g_remaining = [green_circle_ver, green_circle_hor];
-  const arr_r_remaining = [red_circle_ver, red_circle_hor];
+  const GREEN_ARRAY_REMAINING = [GREEN_CIRCLE_VER, GREEN_CIRCLE_HOR];
+  const RED_ARRAY_REMAINING = [RED_CIRCLE_VER, RED_CIRCLE_HOR];
 
   // same color mode run 50 times
-  const ctr_same_color = 2;
+  const SAME_COLOR_CTR = 2;
   var trial_num = 1;
   var system_idx = 4; 
 
@@ -59,19 +59,19 @@
   var mix_flag = false;
 
   // preload the images
-  const imgSrcArr = [
-    green_circle_hor,
-    green_circle_ver,
-    green_rec_hor,
-    green_rec_ver,
-    red_circle_hor,
-    red_circle_ver,
-    red_rec_hor,
-    red_rec_ver,
-    red_canvas,
-    green_canvas,
-    dot,
-    color_blind_test
+  const IMAGE_ARR = [
+    GREEN_CIRCLE_HOR,
+    GREEN_CIRCLE_VER,
+    GREEN_REC_HOR,
+    GREEN_REC_VER,
+    RED_CIRCLE_HOR,
+    RED_CIRCLE_VER,
+    RED_REC_HOR,
+    RED_REC_VER,
+    RED_CANVAS,
+    GREEN_CANVAS,
+    DOT,
+    COLOR_BLIND_TEST
   ];
 
   var createdTime = 0;
@@ -81,7 +81,7 @@
 
   //timing controller
   var controller = false;
-  var canvas_emit_controller = false;
+  var firstCanvasIgnore = false;
 
   //survey vars
   var v1 = "";
@@ -100,7 +100,7 @@
     }
   }
 
-  preloadImg(imgSrcArr);
+  preloadImg(IMAGE_ARR);
 
   //ms: millie seconds you want to sleep
   //usage: await sleep(sleep_time) in an async function
@@ -109,7 +109,7 @@
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  function show_image(src, width, height, direction) {
+  function showImage(src, width, height, direction) {
     var img = document.createElement("img");
     img.src = src;
     switch (direction){
@@ -150,14 +150,14 @@
 
   }
 
-  function clean_image() {
+  function cleanImage() {
     var div = document.getElementById('pic');
     while (div.firstChild) {
       div.removeChild(div.firstChild);
     }
   }
 
-  function get_survey_value(str){
+  function getValueFromSurvey(str){
   	var radio = document.getElementsByName(str);
   	for (i=0; i<radio.length; i++) {
   		if (radio[i].checked) {
@@ -166,59 +166,59 @@
   	}
   }
 
-  function rand_canvas(){
-    let tar_canvas = arr_c[Math.floor(Math.random() * 2)];
+  function generateCanvas(){
+    let tar_canvas = CANVAS_ARRAY[Math.floor(Math.random() * 2)];
     // if( !canvas_emit_controller ){
     //   canvas_emit_controller = true;
     //   return;
     // }
-    show_image(tar_canvas, 800, 450, 'canvas');
+    showImage(tar_canvas, 800, 450, 'canvas');
     let canvas_data = tar_canvas.match(/green_canvas|red_canvas/g);
     canvas_list.push(canvas_data);
   }
 
 
-  async function rand_red() {
-    clean_image();
+  async function generateRed() {
+    cleanImage();
     controller = false;
 
-    if(canvas_emit_controller){
-      show_image(dot, 250, 250, 'center');
-      await sleep(sleep_time);
+    if(firstCanvasIgnore){
+      showImage(DOT, 250, 250, 'center');
+      await sleep(SLEEP_TIME);
 
-      rand_canvas();
-      await sleep(2 * sleep_time);
-      clean_image();
+      generateCanvas();
+      await sleep(2 * SLEEP_TIME);
+      cleanImage();
     }else{
-      canvas_emit_controller = true;
+      firstCanvasIgnore = true;
     }
 
-    show_image(dot, 250, 250, 'center');
-    await sleep(sleep_time);
+    showImage(DOT, 250, 250, 'center');
+    await sleep(SLEEP_TIME);
 
-    clean_image();
-    show_image(dot, 250, 250, 'center');
+    cleanImage();
+    showImage(DOT, 250, 250, 'center');
 
-    var tar_pic = arr_r[Math.floor(Math.random() * 2)];
-    var tar_loc = arr_loc[Math.floor(Math.random() * 5)];
+    var tar_pic = RED_ARRAY[Math.floor(Math.random() * 2)];
+    var tar_loc = LOCATION_ARRAY[Math.floor(Math.random() * 5)];
     var temp_list = [];
 
     var res_data = "rand_red@" + tar_loc + "@" + tar_pic.match(/green_circle_hor|green_circle_ver|green_rec_hor|green_rec_ver|red_circle_hor|red_circle_ver|red_rec_hor|red_rec_ver/g);
     temp_list.push(res_data);
 
-    show_image(tar_pic, 250, 250, tar_loc);
-    var arr_loc_remaining = arr_loc.filter(function(value, index, arr) {
+    showImage(tar_pic, 250, 250, tar_loc);
+    var arr_loc_remaining = LOCATION_ARRAY.filter(function(value, index, arr) {
       return value != tar_loc;
     });
 
     for (let i = 0; i < arr_loc_remaining.length; i++) {
-      var p = arr_r_remaining[Math.floor(Math.random() * 2)];
+      var p = RED_ARRAY_REMAINING[Math.floor(Math.random() * 2)];
       var l = arr_loc_remaining[i];
 
       var temp_data = "rand_red@" + l + "@" + p.match(/green_circle_hor|green_circle_ver|green_rec_hor|green_rec_ver|red_circle_hor|red_circle_ver|red_rec_hor|red_rec_ver/g);
       temp_list.push(temp_data);
 
-      show_image(p, 250, 250, l);
+      showImage(p, 250, 250, l);
     }
     display_list.push(temp_list.sort());
 
@@ -226,47 +226,47 @@
     createdTime = Date.now();
   }
 
-  async function rand_green() {
-    clean_image();
+  async function generateGreen() {
+    cleanImage();
     controller = false;
 
-    if(canvas_emit_controller){
-      show_image(dot, 250, 250, 'center');
-      await sleep(sleep_time);
+    if(firstCanvasIgnore){
+      showImage(DOT, 250, 250, 'center');
+      await sleep(SLEEP_TIME);
 
-      rand_canvas();
-      await sleep(2 * sleep_time);
-      clean_image();
+      generateCanvas();
+      await sleep(2 * SLEEP_TIME);
+      cleanImage();
     }else{
-      canvas_emit_controller = true;
+      firstCanvasIgnore = true;
     }
 
-    show_image(dot, 250, 250, 'center');
-    await sleep(sleep_time);
+    showImage(DOT, 250, 250, 'center');
+    await sleep(SLEEP_TIME);
 
-    clean_image();
-    show_image(dot, 250, 250, 'center');
+    cleanImage();
+    showImage(DOT, 250, 250, 'center');
 
-    var tar_pic = arr_g[Math.floor(Math.random() * 2)];
-    var tar_loc = arr_loc[Math.floor(Math.random() * 5)];
+    var tar_pic = GREEN_ARRAY[Math.floor(Math.random() * 2)];
+    var tar_loc = LOCATION_ARRAY[Math.floor(Math.random() * 5)];
     var temp_list = [];
 
     var res_data = "rand_green@" +  tar_loc + "@" + tar_pic.match(/green_circle_hor|green_circle_ver|green_rec_hor|green_rec_ver|red_circle_hor|red_circle_ver|red_rec_hor|red_rec_ver/g);
     temp_list.push(res_data);
 
-    show_image(tar_pic, 250, 250, tar_loc);
-    var arr_loc_remaining = arr_loc.filter(function(value, index, arr) {
+    showImage(tar_pic, 250, 250, tar_loc);
+    var arr_loc_remaining = LOCATION_ARRAY.filter(function(value, index, arr) {
       return value != tar_loc;
     });
 
     for (let i = 0; i < arr_loc_remaining.length; i++) {
-      var p = arr_g_remaining[Math.floor(Math.random() * 2)];
+      var p = GREEN_ARRAY_REMAINING[Math.floor(Math.random() * 2)];
       var l = arr_loc_remaining[i];
 
       var temp_data = "rand_green@" + l + "@" + p.match(/green_circle_hor|green_circle_ver|green_rec_hor|green_rec_ver|red_circle_hor|red_circle_ver|red_rec_hor|red_rec_ver/g);
       temp_list.push(temp_data);
 
-      show_image(p, 250, 250, l);
+      showImage(p, 250, 250, l);
     }
     display_list.push(temp_list.sort());
 
@@ -274,55 +274,55 @@
     createdTime = Date.now();
   }
 
-  async function rand_red_in_green() {
-    clean_image();
+  async function generateRedInGreen() {
+    cleanImage();
     controller = false;
 
-    show_image(dot, 250, 250, 'center');
-    await sleep(sleep_time);
-    clean_image();
+    showImage(DOT, 250, 250, 'center');
+    await sleep(SLEEP_TIME);
+    cleanImage();
 
-    rand_canvas();
-    await sleep(2 * sleep_time);
-    clean_image();
+    generateCanvas();
+    await sleep(2 * SLEEP_TIME);
+    cleanImage();
 
-    show_image(dot, 250, 250, 'center');
-    await sleep(sleep_time);
+    showImage(DOT, 250, 250, 'center');
+    await sleep(SLEEP_TIME);
 
-    clean_image();
-    show_image(dot, 250, 250, 'center');
+    cleanImage();
+    showImage(DOT, 250, 250, 'center');
 
-    var tar_pic = arr_g[Math.floor(Math.random() * 2)];
-    var tar_loc = arr_loc[Math.floor(Math.random() * 5)];
+    var tar_pic = GREEN_ARRAY[Math.floor(Math.random() * 2)];
+    var tar_loc = LOCATION_ARRAY[Math.floor(Math.random() * 5)];
     var temp_list = [];
 
     var res_data = "rand_red_in_green@" + tar_loc + "@" + tar_pic.match(/green_circle_hor|green_circle_ver|green_rec_hor|green_rec_ver|red_circle_hor|red_circle_ver|red_rec_hor|red_rec_ver/g);
     temp_list.push(res_data);
 
-    show_image(tar_pic, 250, 250, tar_loc);
-    var arr_loc_remaining = arr_loc.filter(function(value, index, arr) {
+    showImage(tar_pic, 250, 250, tar_loc);
+    var arr_loc_remaining = LOCATION_ARRAY.filter(function(value, index, arr) {
       return value != tar_loc;
     });
 
-    var fake_pic = arr_r_remaining[Math.floor(Math.random() * 2)];
+    var fake_pic = RED_ARRAY_REMAINING[Math.floor(Math.random() * 2)];
     var tar_loc2 = arr_loc_remaining[Math.floor(Math.random() * 4)];
 
     var res_data2 = "rand_red_in_green@" + tar_loc2 + "@" + fake_pic.match(/green_circle_hor|green_circle_ver|green_rec_hor|green_rec_ver|red_circle_hor|red_circle_ver|red_rec_hor|red_rec_ver/g);
     temp_list.push(res_data2);
 
-    show_image(fake_pic, 250, 250, tar_loc2);
+    showImage(fake_pic, 250, 250, tar_loc2);
     var arr_loc_remaining2 = arr_loc_remaining.filter(function(value, index, arr) {
       return value != tar_loc2;
     });
 
     for (let i = 0; i < arr_loc_remaining2.length; i++) {
-      var p = arr_g_remaining[Math.floor(Math.random() * 2)]
+      var p = GREEN_ARRAY_REMAINING[Math.floor(Math.random() * 2)]
       var l = arr_loc_remaining2[i];
 
       var temp_data = "rand_red_in_green@" + l + "@" + p.match(/green_circle_hor|green_circle_ver|green_rec_hor|green_rec_ver|red_circle_hor|red_circle_ver|red_rec_hor|red_rec_ver/g);
       temp_list.push(temp_data);
 
-      show_image(p, 250, 250, l);
+      showImage(p, 250, 250, l);
     }
     display_list.push(temp_list.sort());
 
@@ -330,56 +330,56 @@
     createdTime = Date.now();
   }
 
-  async function rand_green_in_red() {
-    clean_image();
+  async function generateGreenInRed() {
+    cleanImage();
     controller = false;
     
-    show_image(dot, 250, 250, 'center');
-    await sleep(sleep_time);
-    clean_image();
+    showImage(DOT, 250, 250, 'center');
+    await sleep(SLEEP_TIME);
+    cleanImage();
 
-    rand_canvas();
-    await sleep(2 * sleep_time);
-    clean_image();
+    generateCanvas();
+    await sleep(2 * SLEEP_TIME);
+    cleanImage();
 
-    show_image(dot, 250, 250, 'center');
-    await sleep(sleep_time);
+    showImage(DOT, 250, 250, 'center');
+    await sleep(SLEEP_TIME);
 
-    clean_image();
-    show_image(dot, 250, 250, 'center');
+    cleanImage();
+    showImage(DOT, 250, 250, 'center');
 
-    var tar_pic = arr_r[Math.floor(Math.random() * 2)];
-    var tar_loc = arr_loc[Math.floor(Math.random() * 5)];
+    var tar_pic = RED_ARRAY[Math.floor(Math.random() * 2)];
+    var tar_loc = LOCATION_ARRAY[Math.floor(Math.random() * 5)];
     var temp_list = [];
 
     var res_data = "rand_green_in_red@" + tar_loc + "@" + tar_pic.match(/green_circle_hor|green_circle_ver|green_rec_hor|green_rec_ver|red_circle_hor|red_circle_ver|red_rec_hor|red_rec_ver/g);
     temp_list.push(res_data);
 
-    show_image(tar_pic, 250, 250, tar_loc);
-    var arr_loc_remaining = arr_loc.filter(function(value, index, arr) {
+    showImage(tar_pic, 250, 250, tar_loc);
+    var arr_loc_remaining = LOCATION_ARRAY.filter(function(value, index, arr) {
       return value != tar_loc;
     });
 
-    var fake_pic = arr_g_remaining[Math.floor(Math.random() * 2)];
+    var fake_pic = GREEN_ARRAY_REMAINING[Math.floor(Math.random() * 2)];
     var tar_loc2 = arr_loc_remaining[Math.floor(Math.random() * 4)];
 
     var res_data2 = "rand_green_in_red@" + tar_loc2 + "@" + fake_pic.match(/green_circle_hor|green_circle_ver|green_rec_hor|green_rec_ver|red_circle_hor|red_circle_ver|red_rec_hor|red_rec_ver/g);
     temp_list.push(res_data2);
 
-    show_image(fake_pic, 250, 250, tar_loc2);
+    showImage(fake_pic, 250, 250, tar_loc2);
 
     var arr_loc_remaining2 = arr_loc_remaining.filter(function(value, index, arr) {
       return value != tar_loc2;
     });
 
     for (let i = 0; i < arr_loc_remaining2.length; i++) {
-      var p = arr_r_remaining[Math.floor(Math.random() * 2)]
+      var p = RED_ARRAY_REMAINING[Math.floor(Math.random() * 2)]
       var l = arr_loc_remaining2[i];
 
       var temp_data = "rand_green_in_red@" + l + "@" + p.match(/green_circle_hor|green_circle_ver|green_rec_hor|green_rec_ver|red_circle_hor|red_circle_ver|red_rec_hor|red_rec_ver/g);
       temp_list.push(temp_data);
 
-      show_image(p, 250, 250, l);
+      showImage(p, 250, 250, l);
     }
     display_list.push(temp_list.sort());
 
@@ -397,22 +397,22 @@
       function PressedKey0(evt) {
         evt.preventDefault();
         if (evt.which == 32) {
-          trial_red_or_green();
+          startTrailRedOrGreen();
         }
       }
     }
   }
 
 
-  async function trial_red_or_green() {
+  async function startTrailRedOrGreen() {
     $(document).off("keypress.trialWait");
     $('#frame6').hide();
     $('#hor_ver').show();
 
     if (Math.floor(Math.random() * 2) == 0) {
-      rand_red();
+      generateRed();
     } else {
-      rand_green();
+      generateGreen();
     }
     document.getElementById('trialNumber').innerHTML = trial_num++;
     $('#progressReport').show();
@@ -421,20 +421,20 @@
 
     function PressedKey7(evt) {
       evt.preventDefault();
-      if (controller & (evt.which == Lkey | evt.which == Rkey)) {
-        if (index < ctr_same_color-2) {
-          res = evt.which == Rkey ? "vertical" : "horizontal";
+      if (controller & (evt.which == L_KEY | evt.which == R_KEY)) {
+        if (index < SAME_COLOR_CTR-2) {
+          res = evt.which == R_KEY ? "vertical" : "horizontal";
           clickedTime = Date.now();
           time = clickedTime - createdTime;
           res_list.push(res);
           res_time.push(time);
           surprise_list.push(0);
 
-          trial_red_or_green();
+          startTrailRedOrGreen();
           index += 1;
         } 
         else if(system_idx - 1 > 0){
-          res = evt.which == Rkey ? "vertical" : "horizontal";
+          res = evt.which == R_KEY ? "vertical" : "horizontal";
           clickedTime = Date.now();
           time = clickedTime - createdTime;
           res_list.push(res);
@@ -445,9 +445,9 @@
           $('#hor_ver').show();
 
           if (Math.floor(Math.random() * 2) == 0) {
-            rand_green_in_red();
+            generateGreenInRed();
           } else {
-            rand_red_in_green();
+            generateRedInGreen();
           }
 
           document.getElementById('trialNumber').innerHTML = trial_num++;
@@ -455,8 +455,8 @@
 
           function PressedKey7_0(evt) {
             evt.preventDefault();
-            if (controller & (evt.which == Lkey | evt.which == Rkey)) {
-              res = evt.which == Rkey ? "vertical" : "horizontal";
+            if (controller & (evt.which == L_KEY | evt.which == R_KEY)) {
+              res = evt.which == R_KEY ? "vertical" : "horizontal";
               clickedTime = Date.now();
               time = clickedTime - createdTime;
               res_list.push(res);
@@ -465,12 +465,12 @@
 
               index = 0//set index back to 0 to loop whole system
               system_idx -= 1;
-              trial_red_or_green();
+              startTrailRedOrGreen();
             } 
           }
         }
         else {
-          res = evt.which == Rkey ? "vertical" : "horizontal";
+          res = evt.which == R_KEY ? "vertical" : "horizontal";
           clickedTime = Date.now();
           time = clickedTime - createdTime;
           res_list.push(res);
@@ -482,9 +482,9 @@
           $('#hor_ver').show();
 
           if (Math.floor(Math.random() * 2) == 0) {
-            rand_green_in_red();
+            generateGreenInRed();
           } else {
-            rand_red_in_green();
+            generateRedInGreen();
           }
 
           document.getElementById('trialNumber').innerHTML = trial_num++;
@@ -494,8 +494,8 @@
 
           function PressedKey7_1(evt) {
             evt.preventDefault();
-            if (controller & (evt.which == Lkey | evt.which == Rkey)) {
-              res = evt.which == Rkey ? "vertical" : "horizontal";
+            if (controller & (evt.which == L_KEY | evt.which == R_KEY)) {
+              res = evt.which == R_KEY ? "vertical" : "horizontal";
               clickedTime = Date.now();
               time = clickedTime - createdTime;
               res_list.push(res);
@@ -504,7 +504,7 @@
 
               // clear index, for other loop cases uses
               index = 0;
-              save();
+              showSurvey();
             }
           }
         }
@@ -512,39 +512,39 @@
     }
   }
 
-  async function save() {
+  async function showSurvey() {
     $(document).off("keypress.trialWait");
-    clean_image();
+    cleanImage();
     $('#hor_ver').hide();
     $('#progressReport').hide();
     $('#Survey').show();
 
-    show_image(color_blind_test, 250, 250, 'test_pic');
+    showImage(COLOR_BLIND_TEST, 250, 250, 'test_pic');
     }
 
-    function checkValue(){
+    function checkSurveyValue(){
       var t1 = $("input:radio[name='Gender']").is(":checked");
       var t2 = $("input:radio[name='Ethnicity']").is(":checked");
       var t3 = $("input:radio[name='Race']").is(":checked");
       var t4 = !(isNaN(document.getElementById('testNumber').value) | (document.getElementById('testNumber').value == ""));
 	    var t5 = !(isNaN(document.getElementById('ageNumber').value) | (document.getElementById('ageNumber').value == ""));
 	  
-      v1 = get_survey_value("Gender");
-      v2 = get_survey_value("Ethnicity");
-      v3 = get_survey_value("Race");
+      v1 = getValueFromSurvey("Gender");
+      v2 = getValueFromSurvey("Ethnicity");
+      v3 = getValueFromSurvey("Race");
       v4 = document.getElementById('testNumber').value;
       v5 = document.getElementById('ageNumber').value;
       
       if(t1 & t2 & t3 & t4 & t5){
-        Saved();
+        endAndSend();
       }
       else{
         alert("Please fill all forms.");
       }
     }
 
-  function Saved(){
-    clean_image();
+  function endAndSend(){
+    cleanImage();
     $('#submitButton').hide();
     $('#Survey').hide();
     $('#done').show();
