@@ -381,7 +381,7 @@
   function tutorialRed() {
     $(document).off("keypress.trialWait");
     $('#remainder').hide();
-    $('#frame3').show();
+    $('#frame2').show();
     generateRed();
     $(document).on("keypress.trialWait", PressedKey4);
     function PressedKey4(evt) {
@@ -394,8 +394,8 @@
   //one green
   function tutorialGreen() {
     $(document).off("keypress.trialWait");
-    $('#frame3').hide();
-    $('#frame2').show();
+    $('#frame2').hide();
+    $('#frame3').show();
     generateGreen();
     $(document).on("keypress.trialWait", PressedKey5);
     function PressedKey5(evt) {
