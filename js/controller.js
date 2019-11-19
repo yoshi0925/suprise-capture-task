@@ -81,7 +81,7 @@
 
   //timing controller
   var controller = false;
-  var firstCanvasIgnore = false;
+  var canvasIgnore = -2;
 
   //survey vars
   var v1 = "";
@@ -178,7 +178,7 @@
   }
 
   async function showCanvas(){
-    if(firstCanvasIgnore){
+    if(canvasIgnore>=0){
         showImage(DOT, 250, 250, 'center');
         await sleep(SLEEP_TIME);
   
@@ -186,7 +186,7 @@
         await sleep(2 * SLEEP_TIME);
         cleanImage();
       }else{
-        firstCanvasIgnore = true;
+        canvasIgnore++;
       }
   
       showImage(DOT, 250, 250, 'center');
@@ -348,19 +348,77 @@
     controller = true;
     createdTime = Date.now();
   }
-
-  function demoSeparateByCanvas(){
+  function tutorialStart() {
     if ($(window).width() >= 600 & screen.width * .8 < $(window).width()) {
       $('#instructions').hide();
-      $('#frame6').show();
+      $('#frame1').show();
       // Begin
-      $(document).on("keypress.trialWait", PressedKey0);
-
-      function PressedKey0(evt) {
+      $(document).on("keypress.trialWait", PressedKey1);
+      function PressedKey1(evt) {
         evt.preventDefault();
         if (evt.which == 32) {
-          startTrailRedOrGreen();
+          tutorialRemainder();
         }
+      }
+    }
+  }
+  var index = 0;
+
+  function tutorialRemainder(){
+    $('#frame1').hide();
+    $('#remainder').show();
+      // Begin
+    $(document).on("keypress.trialWait", PressedKey1);
+    function PressedKey1(evt) {
+      evt.preventDefault();
+      if (evt.which == 32) {
+        tutorialRed();
+      }
+    }
+  }
+
+  //one red
+  function tutorialRed() {
+    $(document).off("keypress.trialWait");
+    $('#remainder').hide();
+    $('#frame3').show();
+    generateRed();
+    $(document).on("keypress.trialWait", PressedKey4);
+    function PressedKey4(evt) {
+      evt.preventDefault();
+      if (controller & (evt.which == L_KEY | evt.which == R_KEY)) {
+        tutorialGreen();
+      }
+    }
+  }
+  //one green
+  function tutorialGreen() {
+    $(document).off("keypress.trialWait");
+    $('#frame3').hide();
+    $('#frame2').show();
+    generateGreen();
+    $(document).on("keypress.trialWait", PressedKey5);
+    function PressedKey5(evt) {
+      evt.preventDefault();
+      if (controller & (evt.which == L_KEY | evt.which == R_KEY)) {
+        demoSeparateByCanvas();
+      }
+    }
+  }
+
+  function demoSeparateByCanvas(){
+    $('#instructions').hide();
+    $('#frame6').show();
+    $('#frame2').hide();
+    $('#frame3').hide();
+    cleanImage();
+    // Begin
+    $(document).on("keypress.trialWait", PressedKey0);
+
+    function PressedKey0(evt) {
+      evt.preventDefault();
+      if (evt.which == 32) {
+        startTrailRedOrGreen();
       }
     }
   }
@@ -507,7 +565,7 @@ function SendToServer() {
 	  'result_list': JSON.stringify(resultResponse),
 	  'result_time': JSON.stringify(resultTime),
 	  'display_info': JSON.stringify(displayInfo),
-      'canvas_info': JSON.stringify(canvasInfo.unshift("no_canvas_at_beginning")),
+      'canvas_info': JSON.stringify(canvasInfo.unshift("no_canvas_at_beginning").unshift("no_canvas_at_beginning")),
 	  'gender': v1,
 	  'ethnicity': v2,
 	  'race': v3,
