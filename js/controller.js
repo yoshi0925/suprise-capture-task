@@ -39,7 +39,7 @@
   const RED_ARRAY_REMAINING = [RED_CIRCLE_VER, RED_CIRCLE_HOR];
 
   // same color mode run 50 times
-  const SAME_COLOR_CTR = 2;
+  const SAME_COLOR_CTR = 6;
   var trialNumber = 1;
   var systemIndex = 4; 
 
@@ -81,7 +81,7 @@
 
   //timing controller
   var controller = false;
-  var canvasIgnore = -2;
+  var canvasIgnore = -3;
 
   //survey vars
   var v1 = "";
@@ -132,7 +132,7 @@
         img.style = "position: absolute; top: 350px; left: 600px;";
         break;
       case "test_pic":
-        img.style = "position: absolute; top: 600px; left: 20px;";
+        img.style = "position: absolute; top: 650px; left: 20px;";
         break;
       case "canvas":
         img.style = "position: absolute; top: 250px; left: 325px;";
@@ -417,7 +417,7 @@
 
     function PressedKey0(evt) {
       evt.preventDefault();
-      if (evt.which == 32) {
+      if (controller & evt.which == 32) {
         startTrailRedOrGreen();
       }
     }
@@ -565,7 +565,7 @@ function SendToServer() {
 	  'result_list': JSON.stringify(resultResponse),
 	  'result_time': JSON.stringify(resultTime),
 	  'display_info': JSON.stringify(displayInfo),
-      'canvas_info': JSON.stringify(canvasInfo.unshift("no_canvas_at_beginning").unshift("no_canvas_at_beginning")),
+      'canvas_info': JSON.stringify(canvasInfo.unshift("no_canvas_at_beginning")),
 	  'gender': v1,
 	  'ethnicity': v2,
 	  'race': v3,

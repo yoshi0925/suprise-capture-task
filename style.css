@@ -32,7 +32,9 @@ body {
     font-family: Arial, Helvetica;
     font-size: 12pt;
 }
-
+input.right{
+    float: right;
+}
 #nextButton {
     display: none;
 }
