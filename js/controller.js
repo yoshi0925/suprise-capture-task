@@ -39,7 +39,7 @@
   const RED_ARRAY_REMAINING = [RED_CIRCLE_VER, RED_CIRCLE_HOR];
 
   // same color mode run 50 times
-  const SAME_COLOR_CTR = 6;
+  const SAME_COLOR_CTR = 50;
   var trialNumber = 1;
   var systemIndex = 4; 
 
@@ -183,7 +183,7 @@
         await sleep(SLEEP_TIME);
   
         generateCanvas();
-        await sleep(2 * SLEEP_TIME);
+        await sleep(SLEEP_TIME);
         cleanImage();
       }else{
         canvasIgnore++;
@@ -435,7 +435,7 @@
       generateGreen();
     }
     document.getElementById('trialNumber').innerHTML = trialNumber++;
-    $('#progressReport').show();
+    // $('#progressReport').show();
 
     $(document).on("keypress.trialWait", PressedKey7);
 
@@ -521,7 +521,7 @@
     $(document).off("keypress.trialWait");
     cleanImage();
     $('#hor_ver').hide();
-    $('#progressReport').hide();
+    // $('#progressReport').hide();
     $('#Survey').show();
 
     showImage(COLOR_BLIND_TEST, 250, 250, 'test_pic');
