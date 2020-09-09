@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Perception and Cognition Lab</title>
   <link rel="stylesheet" href="style.css">
@@ -7,348 +8,391 @@
 </head>
 
 <body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://psyc241.ucsd.edu/Chaipat/TB_PCL_vWM_2AFC/js/vismemCC.js"></script>
-<script src="./js/controller.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://psyc241.ucsd.edu/Chaipat/TB_PCL_vWM_2AFC/js/vismemCC.js"></script>
+  <script src="./js/controller.js"></script>
 
-<div id="save" class="top-div">
-  Saving data...
-</div>
-<div id="done" class="center-div">
-  Done!
-</div>
+  <div id="save" class="top-div">
+    Saving data...
+  </div>
+  <div id="done" class="center-div">
+    Done!
+  </div>
 
-<input type="submit" value="Submit" name="submitButton" id="submitButton" style="position: absolute; margin: auto; top: 0; right: 0; bottom: 0; left: 0; width: 50px; height: 100px;" onclick="endAndSend()">
-<input type="submit" value="Submit" name="submitButton0" id="submitButton0" style="position: absolute; margin: auto; top: 0; right: 0; bottom: 0; left: 0; width: 50px; height: 100px; display: none;" onclick="endAndSend()">
+  <input type="submit" value="Submit" name="submitButton" id="submitButton"
+    style="position: absolute; margin: auto; top: 0; right: 0; bottom: 0; left: 0; width: 50px; height: 100px;"
+    onclick="endAndSend()">
+  <input type="submit" value="Submit" name="submitButton0" id="submitButton0"
+    style="position: absolute; margin: auto; top: 0; right: 0; bottom: 0; left: 0; width: 50px; height: 100px; display: none;"
+    onclick="endAndSend()">
 
-<div id="instructions">
-  <h2> Reaction Time Test </h2>
-  <p>
+  <div id="instructions">
+    <h2> Reaction Time Test </h2>
+    <p>
 
-    <p> <b> To proceed, please go fullscreen and your screen need to be bigger than 400 pixels </b>
-      <br> Press <b>F11</b> to go full screen on a Windows PC
-    </p>
-    <p style="font:5px"> Clicking on the button will indicate that you have read this consent document and agree to participate. </p>
+      <p> <b> To proceed, please go fullscreen and your screen need to be bigger than 400 pixels </b>
+        <br> Press <b>F11</b> to go full screen on a Windows PC
+      </p>
+      <p style="font:5px"> Clicking on the button will indicate that you have read this consent document and agree to
+        participate. </p>
 
-    <div id="startExperimentButton">
-      <a href="#" id="startExperiment">I agree</a>
-    </div>
-    <p></p>
-
-    <div id="consent" style="height:300px; border:1px solid #ccc;font:12px Arial, Helvetica; overflow:auto" align="justify">
-      <p align="center"><b>UNIVERSITY OF CALIFORNIA, SAN DIEGO
-          <br>CONSENT TO ACT AS A RESEARCH SUBJECT</b>
-
-        <p> Dr. John Serences is conducting a research study to learn more about how attention affects how you see things
-          (perception) and how you make simple decisions. There will be approximately 5,000 participants in the study
-          over the next 10 years.</p>
-
-        <p>
-          <br><b>PROCEDURES.</b> If you agree to be in this study by clicking “Agree” and continuing to this task, the following
-          will happen to you: You will be presented with stimuli that consist of simple shapes presented on a computer
-          screen. You will respond with button presses and/or using your computer mouse.
-          <p>
-            <br> <b>RISKS.</b> You will be required only to continue to interact with your web browser and make responses for a short
-            duration. Thus, no potential risks or discomforts are anticipated except for the possibility that some tasks may
-            be slightly boring. However, there may be risks that are currently unforeseeable.</p>
-
-          <p>
-            <br><b>REMUNERATION.</b> In consideration of your time and effort you will receive extra course credit for your
-            participation via the SONA system (0.5 credits per 30 minutes, rounded up to the nearest 30-minute increment).</p>
-
-          <p>
-            <br><b>RIGHTS.</b> If you are injured as a direct result of participation in this research, the University of California will
-            provide any medical care you need to treat those injuries. The University will not provide any other form of
-            compensation to you if you are injured. You may call the Human Research Protections Program at 858-246-
-            4777 for more information about this, to inquire about your rights as a research subject, or to report research-
-            related problems.</p>
-
-          <p>
-            <br><b>BENEFITS.</b> There will be no direct benefit to you from these procedures. However, the investigator may learn more about basic questions pertaining to attention, memory and vision. This knowledge may have benefits to society in
-            fields
-            ranging from improving education to visual design, but these benefits will be indirect.</p>
-
-          <p>
-            <br><b>EXPLANATION.</b> Dr. John Serences or a member of his research team has explained this study to you and
-            answered your questions. If you have other questions or research-related problems, you may reach him at 858-
-            534-3686. </p>
-          <p>
-            <br><b>VOLUNTARY NATURE OF PARTICIPATION.</b> Participation in this research is entirely voluntary. There is
-            no cost to you for participating. The alternative to participating is not participating. You may refuse to
-            participate or you may withdraw at any time without jeopardy to the medical care you will receive at this
-            institution, without loss of any access to the care to which you are entitled, or loss of the benefits to which you
-            are entitled. You may also be withdrawn from the study if the investigator feels it is in your best interest or for
-            other study-related purposes. If you wish to withdraw from the study tell a member of the study staff and the
-            testing session will terminate immediately. You will be compensated for the time you have spent.</p>
-
-          <p>
-            <br><b>CONFIDENTIALITY.</b> Research records will be kept confidential to the extent provided by law. Research
-            records will only be accessible by Dr Serences and his research team, and by the UCSD Institutional Review
-            Board. You have received a copy of this consent document.</p>
-
-          <p>
-            <br>By clicking “I agree”, you are indicating that you are at least 18 years old, have read this consent form and agree to participate in this research study. Please print a copy of this page for your records.</p>
-        </p>
-    </div>
-</div>
-
-<div id='frame1' ; class='center'>
-  <p>
-    <br> On each trial, you'll see five shapes and need to identify the direction of the line inside the diamond-shaped target <b> as FAST as possible</b>.
-    <br> <br> On each trial, there will be only one diamond shape. Press the <b>"Z"</b> key if the line is horizontal, press the <b>"M"</b> key if the line is vertical.
-    <br> <br> <b>Color is Irrelevant. IGNORE “pop out” color distractors. You should only look for diamond shape.</b>
-    <br> <br> There will be green or red canvas appears during each trial, no actions required between canvas display.
-    <br> <br> You will be given 3 seconds for each trial.
-    <br> <br> Please keep your eyes on the dot in the middle.
-
-    <br> <br> <br> <br> <br> Please press space bar to continue.</p>
-</div>
-<div id='remainder'; class=center>
-  <p>
-    <br> <b>Color is Irrelevant. IGNORE “pop out” color distractors. You should only look for diamond shape.</b>
-    <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> Please press <b>space bar</b> to continue.</p>
-  </p>
-</div>
-<!-- Target Absent Trial Demo -->
-<div id='frame2' ; class='trialDiv'>
-  <p>
-    <br>
-    <br> You may see something like this
-    <br> Your goal is to report the direction of line inside diamond-shaped target <b>as FAST as possible</b>.
-    <br> <b>Color is Irrelevant. IGNORE "pop out" color distractors. You should only look for diamond shape.</b>
-    <br> If the pictures are not complete, please <b>maximaze</b> the window.
-
-    <br> <br> Please press <b>"Z"</b> to choose the horizontal direction OR <b>"M"</b> to choose the vertical direction as your response.</p>
-</div>
-
-<!-- Target Present Trial Demo -->
-<div id='frame3' ; class='trialDiv'>
-  <p>
-    <br> You may also see something like this
-    <br> Your goal is <b>the same</b> as before: report the direction of line inside diamond-shaped target <b>as FAST as possible</b>.
-    <br> <b>Color is Irrelevant. IGNORE "pop out" color distractors. You should only look for diamond shape.</b>
-    <br> If the pictures are not complete, please <b>maximaze</b> the window.
-
-    <br> <br> Please press <b>"Z"</b> to choose the horizontal direction OR <b>"M"</b> to choose the vertical direction as your response.</p>
-</div>
-
-<!-- Target Present Trial Demo -->
-<div id='frame4' ; class='trialDiv'>
-  <p>
-    <br> You may see something like this
-    <br> Your goal is <b>the same</b> as previous: report which way the line is facing inside of the diamond-shaped target.
-    <br> Please press <b>"Z"</b> if the line horizontal OR <b>"M"</b> if the line is vertical.
-
-    <br> <br> Please press <b>"Z"</b> to choose the horizontal direction OR <b>"M"</b> to choose the vertical direction as your response.</p>
-</div>
-
-<!-- Target Present Trial Demo -->
-<div id='frame5' ; class='trialDiv'>
-  <p>
-    <br> You may see something like this
-    <br> Your goal is <b>the same</b> as previous: report which way the line is facing inside of the diamond-shaped target.
-    <br> Please press <b>"Z"</b> if the line horizontal OR <b>"M"</b> if the line is vertical.
-
-    <br> <br> Please press <b>"Z"</b> to choose the horizontal direction OR <b>"M"</b> to choose the vertical direction as your response.</p>
-</div>
-
-<div id='frame6' ; class='trialDiv'>
-  <p>
-    <br> Trial starts!
-    <br> <br> Please press <b>space</b> to continue.</p>
-</div>
-
-<!-- Start page of every group of trials -->
-<div id='frame7' ; class='trialDiv'>
-  <p>
-    <br> You can proceed to the next round of trials when you are ready.
-    <br> <br> Please press <b>any keys</b> to continue.</p>
-</div>
-
-<!-- Trial Page -->
-<div id='hor_ver' ; class='trialDiv'>
-  <p>
-    <br> Press 'Z' for horizontal, 'M' for vertical.</p>
-</div>
-
-<div id="progressReport" ; class='trialDiv'>
-  Trial <span id="trialNumber">1</span> of <span id="totalTrialNumber">50</span>;
-  <!-- THIS NUMBER WILL NEED TO BE CHANGED IF THE NUMBER OF TRIALS CHANGES -->
-</div>
-
-<div id="fill" ; class='trialDiv'>
-  <p>
-    <br> Please fill all fields.</p>
-</div>
-
-<!-- Survey -->
-<section class="container" id="Survey" style="margin-bottom:15px; padding: 10px 10px; font-family: Verdana, Geneva, sans-serif; color:#333333; font-size:0.9em;">
-
-  <div class="row col-xs-12 col-md-12"><!-- Instructions -->
-
-    <div class="panel panel-primary">
-
-      <div class="panel-heading"><strong>Race and Ethnicity Form (!YOU MUST HIT SAVE BUTTON FOR SONA CREDIT!) </strong></div>
-
-      <div class="panel-body">
-
-        <p>Please fill out the following demographics survey before you submit your results. If choosing to not report, please select "Unknown or not reported".</p>
-
+      <div id="startExperimentButton">
+        <a href="#" id="startExperiment">I agree</a>
       </div>
+      <p></p>
 
-    </div>
-    <!-- End Instructions -->
-    
-    <!-- Survey Body -->
+      <div id="consent" style="height:300px; border:1px solid #ccc;font:12px Arial, Helvetica; overflow:auto"
+        align="justify">
+        <p align="center"><b>UNIVERSITY OF CALIFORNIA, SAN DIEGO
+            <br>CONSENT TO ACT AS A RESEARCH SUBJECT</b>
 
-    <section>
-      <fieldset>
-          <label>1. What is your gender? </label>
+          <p> Dr. John Serences is conducting a research study to learn more about how attention affects how you see
+            things
+            (perception) and how you make simple decisions. There will be approximately 5,000 participants in the study
+            over the next 10 years.</p>
 
-        <div class="radio">
-          <label>
-            <input name="Gender" type="radio" value="Male" />Male
-          </label>
-        </div>
+          <p>
+            <br><b>PROCEDURES.</b> If you agree to be in this study by clicking “Agree” and continuing to this task, the
+            following
+            will happen to you: You will be presented with stimuli that consist of simple shapes presented on a computer
+            screen. You will respond with button presses and/or using your computer mouse.
+            <p>
+              <br> <b>RISKS.</b> You will be required only to continue to interact with your web browser and make
+              responses for a short
+              duration. Thus, no potential risks or discomforts are anticipated except for the possibility that some
+              tasks may
+              be slightly boring. However, there may be risks that are currently unforeseeable.</p>
 
-        <div class="radio">
-          <label>
-            <input name="Gender" type="radio" value="Female" />Female
-          </label>
-        </div>
+            <p>
+              <br><b>REMUNERATION.</b> In consideration of your time and effort you will receive extra course credit for
+              your
+              participation via the SONA system (0.5 credits per 30 minutes, rounded up to the nearest 30-minute
+              increment).</p>
 
-        <div class="radio">
-          <label>
-            <input name="Gender" type="radio" value="Other" />Non-binary or Other
-          </label>
-        </div>
+            <p>
+              <br><b>RIGHTS.</b> If you are injured as a direct result of participation in this research, the University
+              of California will
+              provide any medical care you need to treat those injuries. The University will not provide any other form
+              of
+              compensation to you if you are injured. You may call the Human Research Protections Program at 858-246-
+              4777 for more information about this, to inquire about your rights as a research subject, or to report
+              research-
+              related problems.</p>
 
-        <div class="radio">
-          <label>
-            <input name="Gender" type="radio" value="NoResponse" />Unknown or not reported
-          </label>
-        </div>
+            <p>
+              <br><b>BENEFITS.</b> There will be no direct benefit to you from these procedures. However, the
+              investigator may learn more about basic questions pertaining to attention, memory and vision. This
+              knowledge may have benefits to society in
+              fields
+              ranging from improving education to visual design, but these benefits will be indirect.</p>
 
-      </fieldset>
+            <p>
+              <br><b>EXPLANATION.</b> Dr. John Serences or a member of his research team has explained this study to you
+              and
+              answered your questions. If you have other questions or research-related problems, you may reach him at
+              858-
+              534-3686. </p>
+            <p>
+              <br><b>VOLUNTARY NATURE OF PARTICIPATION.</b> Participation in this research is entirely voluntary. There
+              is
+              no cost to you for participating. The alternative to participating is not participating. You may refuse to
+              participate or you may withdraw at any time without jeopardy to the medical care you will receive at this
+              institution, without loss of any access to the care to which you are entitled, or loss of the benefits to
+              which you
+              are entitled. You may also be withdrawn from the study if the investigator feels it is in your best
+              interest or for
+              other study-related purposes. If you wish to withdraw from the study tell a member of the study staff and
+              the
+              testing session will terminate immediately. You will be compensated for the time you have spent.</p>
 
-      <fieldset>
-        <label>2. Which ethnicity best describes you? </label>
+            <p>
+              <br><b>CONFIDENTIALITY.</b> Research records will be kept confidential to the extent provided by law.
+              Research
+              records will only be accessible by Dr Serences and his research team, and by the UCSD Institutional Review
+              Board. You have received a copy of this consent document.</p>
 
-        <div class="radio">
-          <label>
-            <input name="Ethnicity" type="radio" value="Hispanic/Latino" />Hispanic or Latino
-          </label>
-        </div>
+            <p>
+              <br>By clicking “I agree”, you are indicating that you are at least 18 years old, have read this consent
+              form and agree to participate in this research study. Please print a copy of this page for your records.
+            </p>
+          </p>
+      </div>
+  </div>
 
-        <div class="radio">
-          <label>
-            <input name="Ethnicity" type="radio" value="NonHispanic" />Not Hispanic or Latino
-          </label>
-        </div>
+  <div id='frame1' ; class='center'>
+    <p>
+      <br> On each trial, you'll see five shapes and need to identify the direction of the line inside the
+      diamond-shaped target <b> as FAST as possible</b>.
+      <br> <br> On each trial, there will be only one diamond shape. Press the <b>"Z"</b> key if the line is horizontal,
+      press the <b>"M"</b> key if the line is vertical.
+      <br> <br> <b>Color is Irrelevant. IGNORE “pop out” color distractors. You should only look for diamond shape.</b>
+      <br> <br> There will be green or red canvas appears during each trial, no actions required between canvas display.
+      <br> <br> You will be given 3 seconds for each trial.
+      <br> <br> Please keep your eyes on the dot in the middle.
 
-        <div class="radio">
-          <label>
-            <input name="Ethnicity" type="radio" value="NoResponse" />Unknown or not reported
-          </label>
-        </div>
+      <br> <br> <br> <br> <br> Please press space bar to continue.</p>
+  </div>
+  <div id='remainder' ; class=center>
+    <p>
+      <br> <b>Color is Irrelevant. IGNORE “pop out” color distractors. You should only look for diamond shape.</b>
+      <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> Please press <b>space bar</b> to continue.</p>
+    </p>
+  </div>
+  <!-- Target Absent Trial Demo -->
+  <div id='frame2' ; class='trialDiv'>
+    <p>
+      <br>
+      <br> You may see something like this
+      <br> Your goal is to report the direction of line inside diamond-shaped target <b>as FAST as possible</b>.
+      <br> <b>Color is Irrelevant. IGNORE "pop out" color distractors. You should only look for diamond shape.</b>
+      <br> If the pictures are not complete, please <b>maximaze</b> the window.
 
-      </fieldset>
+      <br> <br> Please press <b>"Z"</b> to choose the horizontal direction OR <b>"M"</b> to choose the vertical
+      direction as your response.</p>
+  </div>
 
-      <fieldset>
-        <label>3. Which race best describes you? (Please choose only one) </label>
+  <!-- Target Present Trial Demo -->
+  <div id='frame3' ; class='trialDiv'>
+    <p>
+      <br> You may also see something like this
+      <br> Your goal is <b>the same</b> as before: report the direction of line inside diamond-shaped target <b>as FAST
+        as possible</b>.
+      <br> <b>Color is Irrelevant. IGNORE "pop out" color distractors. You should only look for diamond shape.</b>
+      <br> If the pictures are not complete, please <b>maximaze</b> the window.
 
-        <div class="radio">
-          <label>
-            <input name="Race" type="radio" value="AmericanIndian" />American Indian or Alaskan Native
-          </label>
-        </div>
+      <br> <br> Please press <b>"Z"</b> to choose the horizontal direction OR <b>"M"</b> to choose the vertical
+      direction as your response.</p>
+  </div>
 
-        <div class="radio">
-          <label>
-            <input name="Race" type="radio" value="Asian" />Asian
-          </label>
-        </div>
+  <!-- Target Present Trial Demo -->
+  <div id='frame4' ; class='trialDiv'>
+    <p>
+      <br> You may see something like this
+      <br> Your goal is <b>the same</b> as previous: report which way the line is facing inside of the diamond-shaped
+      target.
+      <br> Please press <b>"Z"</b> if the line horizontal OR <b>"M"</b> if the line is vertical.
 
-        <div class="radio">
-          <label>
-            <input name="Race" type="radio" value="PacificIslander" />Pacific Islander
-          </label>
-        </div>
+      <br> <br> Please press <b>"Z"</b> to choose the horizontal direction OR <b>"M"</b> to choose the vertical
+      direction as your response.</p>
+  </div>
 
-        <div class="radio">
-          <label>
-            <input name="Race" type="radio" value="Black" />Black or African American
-          </label>
-        </div>
+  <!-- Target Present Trial Demo -->
+  <div id='frame5' ; class='trialDiv'>
+    <p>
+      <br> You may see something like this
+      <br> Your goal is <b>the same</b> as previous: report which way the line is facing inside of the diamond-shaped
+      target.
+      <br> Please press <b>"Z"</b> if the line horizontal OR <b>"M"</b> if the line is vertical.
 
-        <div class="radio">
-          <label>
-            <input name="Race" type="radio" value="White" />White/Caucasian
-          </label>
-        </div>
+      <br> <br> Please press <b>"Z"</b> to choose the horizontal direction OR <b>"M"</b> to choose the vertical
+      direction as your response.</p>
+  </div>
 
-        <div class="radio">
-          <label>
-            <input name="Race" type="radio" value="MoreThanOne" />More Than One Race
-          </label>
-        </div>
+  <div id='frame6' ; class='trialDiv'>
+    <p>
+      <br> Trial starts!
+      <br> <br> Please press <b>space</b> to continue.</p>
+  </div>
 
-        <div class="radio">
-          <label>
-            <input name="Race" type="radio" value="NoResponse" />Unknown or not reported
-          </label>
-        </div>
+  <!-- Start page of every group of trials -->
+  <div id='frame7' ; class='trialDiv'>
+    <p>
+      <br> You can proceed to the next round of trials when you are ready.
+      <br> <br> Please press <b>any keys</b> to continue.</p>
+  </div>
 
-      </fieldset>
+  <!-- Trial Page -->
+  <div id='hor_ver' ; class='trialDiv'>
+    <p>
+      <br> Press 'Z' for horizontal, 'M' for vertical.</p>
+  </div>
 
-    </section>
-    
-    <section>
-   		 <form id="age_form">
-          <strong>Enter a number for your age: <input type="number" id="ageNumber" name="ageNumber"></strong><br> <br>
-        </form>
-    </section>
-    
-      <!-- End Survey Body -->
+  <div id="progressReport" ; class='trialDiv'>
+    Trial <span id="trialNumber">1</span> of <span id="totalTrialNumber">50</span>;
+    <!-- THIS NUMBER WILL NEED TO BE CHANGED IF THE NUMBER OF TRIALS CHANGES -->
+  </div>
 
+  <div id="fill" ; class='trialDiv'>
+    <p>
+      <br> Please fill all fields.</p>
+  </div>
 
-    <div class="row col-xs-12 col-md-12" ><!-- Instructions -->
+  <!-- Survey -->
+  <section class="container" id="Survey"
+    style="margin-bottom:15px; padding: 10px 10px; font-family: Verdana, Geneva, sans-serif; color:#333333; font-size:0.9em;">
+
+    <div class="row col-xs-12 col-md-12">
+      <!-- Instructions -->
 
       <div class="panel panel-primary">
 
-        <div class="panel-heading"><strong>Instructions</strong></div>
+        <div class="panel-heading"><strong>Race and Ethnicity Form (!YOU MUST HIT SAVE BUTTON FOR SONA CREDIT!)
+          </strong></div>
 
         <div class="panel-body">
 
-          <p>Please look at the picture below, and enter the number that you see in the corresponding boxes</p>
+          <p>Please fill out the following demographics survey before you submit your results. If choosing to not
+            report, please select "Unknown or not reported".</p>
 
         </div>
 
       </div>
-      <!-- End Instructions --><!-- Test Body -->
-      <div id="test_pic" style="float: left; clear: both; margin: 50px 0px 0px 0px;">
-        <form id="number_form">
-          <strong>Enter the number in the picture: <input type="number" id="testNumber" name="testNumber"></strong><br>
+      <!-- End Instructions -->
+
+      <!-- Survey Body -->
+
+      <section>
+        <fieldset>
+          <label>1. What is your gender? </label>
+
+          <div class="radio">
+            <label>
+              <input name="Gender" type="radio" value="Male" />Male
+            </label>
+          </div>
+
+          <div class="radio">
+            <label>
+              <input name="Gender" type="radio" value="Female" />Female
+            </label>
+          </div>
+
+          <div class="radio">
+            <label>
+              <input name="Gender" type="radio" value="Other" />Non-binary or Other
+            </label>
+          </div>
+
+          <div class="radio">
+            <label>
+              <input name="Gender" type="radio" value="NoResponse" />Unknown or not reported
+            </label>
+          </div>
+
+        </fieldset>
+
+        <fieldset>
+          <label>2. Which ethnicity best describes you? </label>
+
+          <div class="radio">
+            <label>
+              <input name="Ethnicity" type="radio" value="Hispanic/Latino" />Hispanic or Latino
+            </label>
+          </div>
+
+          <div class="radio">
+            <label>
+              <input name="Ethnicity" type="radio" value="NonHispanic" />Not Hispanic or Latino
+            </label>
+          </div>
+
+          <div class="radio">
+            <label>
+              <input name="Ethnicity" type="radio" value="NoResponse" />Unknown or not reported
+            </label>
+          </div>
+
+        </fieldset>
+
+        <fieldset>
+          <label>3. Which race best describes you? (Please choose only one) </label>
+
+          <div class="radio">
+            <label>
+              <input name="Race" type="radio" value="AmericanIndian" />American Indian or Alaskan Native
+            </label>
+          </div>
+
+          <div class="radio">
+            <label>
+              <input name="Race" type="radio" value="Asian" />Asian
+            </label>
+          </div>
+
+          <div class="radio">
+            <label>
+              <input name="Race" type="radio" value="PacificIslander" />Pacific Islander
+            </label>
+          </div>
+
+          <div class="radio">
+            <label>
+              <input name="Race" type="radio" value="Black" />Black or African American
+            </label>
+          </div>
+
+          <div class="radio">
+            <label>
+              <input name="Race" type="radio" value="White" />White/Caucasian
+            </label>
+          </div>
+
+          <div class="radio">
+            <label>
+              <input name="Race" type="radio" value="MoreThanOne" />More Than One Race
+            </label>
+          </div>
+
+          <div class="radio">
+            <label>
+              <input name="Race" type="radio" value="NoResponse" />Unknown or not reported
+            </label>
+          </div>
+
+        </fieldset>
+
+      </section>
+
+      <section>
+        <form id="age_form">
+          <strong>Enter a number for your age: <input type="number" id="ageNumber" name="ageNumber"></strong><br> <br>
         </form>
-        <button type="next" id="testButton" value="Next" class="right"; onclick="checkSurveyValue()">Save</button>
+      </section>
+
+      <!-- End Survey Body -->
+
+
+      <div class="row col-xs-12 col-md-12">
+        <!-- Instructions -->
+
+        <div class="panel panel-primary">
+
+          <div class="panel-heading"><strong>Instructions</strong></div>
+
+          <div class="panel-body">
+
+            <p>Please look at the picture below, and enter the number that you see in the corresponding boxes</p>
+
+          </div>
+
+        </div>
+        <!-- End Instructions -->
+        <!-- Test Body -->
+        <div id="test_pic" style="float: left; clear: both; margin: 50px 0px 0px 0px;">
+          <form id="number_form">
+            <strong>Enter the number in the picture: <input type="number" id="testNumber"
+                name="testNumber"></strong><br>
+          </form>
+          <button type="next" id="testButton" value="Next" class="right" ; onclick="checkSurveyValue()">Save</button>
+
+        </div>
 
       </div>
 
+      <!-- End Test Body -->
     </div>
+  </section>
+  <!-- close container -->
 
-  <!-- End Test Body -->
+  <div id='pic' ; class="pic">
   </div>
-</section>
-<!-- close container -->
 
-<div id='pic'; class="pic">
-</div>
-
-<!--Beginning of javascript code-->
-<script>
-  $('#startExperiment').click(tutorialStart);
-  $('.trialDiv').hide();
-  $("#Survey").hide();
-</script>
+  <!--Beginning of javascript code-->
+  <script>
+    $('#startExperiment').click(tutorialStart);
+    $('.trialDiv').hide();
+    $("#Survey").hide();
+  </script>
 </body>
+
 </html>

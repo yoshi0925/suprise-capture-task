@@ -11,6 +11,7 @@
     text-align: center;
     display: none;
 }
+
 .center {
     margin: auto;
     width: 60%;
@@ -21,8 +22,8 @@
 }
 
 .pic {
-    float: left; 
-    clear: both; 
+    float: left;
+    clear: both;
     margin: auto;
     width: 100%;
     padding: 10px;
@@ -32,9 +33,11 @@ body {
     font-family: Arial, Helvetica;
     font-size: 12pt;
 }
-input.right{
+
+input.right {
     float: right;
 }
+
 #nextButton {
     display: none;
 }
