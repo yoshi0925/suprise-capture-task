@@ -503,23 +503,37 @@ function demoSeparateByCanvas() {
   function PressedKey0(evt) {
     evt.preventDefault();
     if (controller & (evt.which == 32)) {
-      startTrailRedOrGreen();
+      startTrailEqualChance();
     }
   }
 }
-
-async function startTrailRedOrGreen() {
+var surpriseAppears = 0;
+async function startTrailEqualChance() {
   $(document).off("keypress.trialWait");
   $("#frame6").hide();
   $("#hor_ver").show();
 
   if (Math.floor(Math.random() * 2) == 0) {
-    generateRed();
+    //surprise
+    surpriseAppears = 1;
+
+    if (Math.floor(Math.random() * 2) == 0) {
+      generateGreenInRed();
+    } else {
+      generateRedInGreen();
+    }
   } else {
-    generateGreen();
+    //not surprise
+    surpriseAppears = 0;
+
+    if (Math.floor(Math.random() * 2) == 0) {
+      generateRed();
+    } else {
+      generateGreen();
+    }
   }
   document.getElementById("trialNumber").innerHTML = trialNumber++;
-  // $('#progressReport').show();
+  // $("#progressReport").show();
 
   $(document).on("keypress.trialWait", PressedKey7);
 
@@ -527,21 +541,35 @@ async function startTrailRedOrGreen() {
     evt.preventDefault();
     if (controller & ((evt.which == L_KEY) | (evt.which == R_KEY))) {
       if (index < SAME_COLOR_CTR - 2) {
-        saveData(evt, 0);
+        saveData(evt, surpriseAppears);
 
-        startTrailRedOrGreen();
+        startTrailEqualChance();
         index += 1;
       } else if (systemIndex - 1 > 0) {
-        saveData(evt, 0);
+        saveData(evt, surpriseAppears);
 
         $(document).off("keypress.trialWait");
         $("#frame6").hide();
         $("#hor_ver").show();
 
         if (Math.floor(Math.random() * 2) == 0) {
-          generateGreenInRed();
+          //surprise
+          surpriseAppears = 1;
+
+          if (Math.floor(Math.random() * 2) == 0) {
+            generateGreenInRed();
+          } else {
+            generateRedInGreen();
+          }
         } else {
-          generateRedInGreen();
+          //not surprise
+          surpriseAppears = 0;
+
+          if (Math.floor(Math.random() * 2) == 0) {
+            generateRed();
+          } else {
+            generateGreen();
+          }
         }
 
         document.getElementById("trialNumber").innerHTML = trialNumber++;
@@ -550,26 +578,39 @@ async function startTrailRedOrGreen() {
         function PressedKey7_0(evt) {
           evt.preventDefault();
           if (controller & ((evt.which == L_KEY) | (evt.which == R_KEY))) {
-            saveData(evt, 1);
+            saveData(evt, surpriseAppears);
 
             index = 0; //set index back to 0 to loop whole system
             systemIndex -= 1;
-            startTrailRedOrGreen();
+            startTrailEqualChance();
           }
         }
       } else {
-        saveData(evt, 1);
+        saveData(evt, surpriseAppears);
 
         $(document).off("keypress.trialWait");
         $("#frame6").hide();
         $("#hor_ver").show();
 
         if (Math.floor(Math.random() * 2) == 0) {
-          generateGreenInRed();
-        } else {
-          generateRedInGreen();
-        }
+          //surprise
+          surpriseAppears = 1;
 
+          if (Math.floor(Math.random() * 2) == 0) {
+            generateGreenInRed();
+          } else {
+            generateRedInGreen();
+          }
+        } else {
+          //not surprise
+          surpriseAppears = 0;
+
+          if (Math.floor(Math.random() * 2) == 0) {
+            generateRed();
+          } else {
+            generateGreen();
+          }
+        }
         document.getElementById("trialNumber").innerHTML = trialNumber++;
         //$('#progressReport').show();
 
@@ -578,7 +619,7 @@ async function startTrailRedOrGreen() {
         function PressedKey7_1(evt) {
           evt.preventDefault();
           if (controller & ((evt.which == L_KEY) | (evt.which == R_KEY))) {
-            saveData(evt, 1);
+            saveData(evt, surpriseAppears);
 
             // clear index, for other loop cases uses
             index = 0;
